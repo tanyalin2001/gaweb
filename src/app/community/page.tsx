@@ -1,5 +1,5 @@
 'use client';
-import { useAuth } from '@/lib/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function CommunityPage() {
   const auth = useAuth();

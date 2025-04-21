@@ -17,6 +17,7 @@ export default function LoginPage() {
     if (data.token) {
       localStorage.setItem('token', data.token);
       router.push('/');
+      window.location.reload();
     } else {
       alert(data.message);
     }
