@@ -28,7 +28,13 @@ export default function NavigationMenu() {
         <Link href="/guide">教學</Link>
         <Link href="/meta">上位牌組</Link>
         <Link href="/community">玩家投稿</Link>
-        {isLoggedIn && role === 'admin' && <Link href="/admin">後台管理</Link>}
+        {isLoggedIn && role === 'admin' && (
+          <>
+            <Link href="/admin">後台管理</Link>
+            <Link href="/admin/info">新增公告</Link>
+          </>
+        )}
+
 
         {!isLoggedIn ? (
           <>
@@ -75,7 +81,10 @@ export default function NavigationMenu() {
               <Link href="/meta" onClick={() => setOpen(false)}>上位牌組</Link>
               <Link href="/community" onClick={() => setOpen(false)}>玩家投稿</Link>
               {isLoggedIn && role === 'admin' && (
-                <Link href="/admin" onClick={() => setOpen(false)}>後台管理</Link>
+                <>
+                  <Link href="/admin" onClick={() => setOpen(false)}>後台管理</Link>
+                  <Link href="/admin/post" onClick={() => setOpen(false)}>新增公告</Link>
+                </>
               )}
 
               {!isLoggedIn ? (
