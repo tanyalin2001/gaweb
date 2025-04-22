@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { connectDB } from '@/lib/mongodb'
 import Info from '@/models/Info'
 
@@ -8,23 +8,29 @@ export async function GET() {
   return NextResponse.json(infos)
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   await connectDB()
-  const { title, content } = await req.json()
-  const created = await Info.create({ title, content })
-  return NextResponse.json(created)
+  const { title, content, coverUrl, tags } = await req.json()
+  const info = await Info.create({
+    title,
+    content,
+    coverUrl,
+    tags: tags || [],
+    createdAt: new Date(),
+  })
+  return NextResponse.json(info)
 }
 
-export async function DELETE(req: Request) {
+export async function PUT(req: NextRequest) {
+  await connectDB()
+  const { id, title, content } = await req.json()
+  await Info.findByIdAndUpdate(id, { title, content })
+  return NextResponse.json({ message: 'Updated' })
+}
+
+export async function DELETE(req: NextRequest) {
   await connectDB()
   const { id } = await req.json()
   await Info.findByIdAndDelete(id)
-  return NextResponse.json({ message: 'deleted' })
-}
-
-export async function PUT(req: Request) {
-  await connectDB()
-  const { id, title, content } = await req.json()
-  const updated = await Info.findByIdAndUpdate(id, { title, content }, { new: true })
-  return NextResponse.json(updated)
+  return NextResponse.json({ message: 'Deleted' })
 }

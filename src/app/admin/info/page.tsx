@@ -1,32 +1,24 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useAuth } from '@/hooks/useAuth'
-import { useRouter } from 'next/navigation'
+import UploadImageButton from '@/components/UploadImageButton'
 
 interface InfoEntry {
   _id: string
   title: string
   content: string
+  coverUrl?: string
+  tags?: string[]
 }
 
 export default function AdminInfoPage() {
-  const { role, isLoggedIn } = useAuth()
-  const router = useRouter()
-
   const [infos, setInfos] = useState<InfoEntry[]>([])
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [coverUrl, setCoverUrl] = useState('')
+  const [tags, setTags] = useState<string[]>([])
+  const [tagInput, setTagInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [editedTitle, setEditedTitle] = useState('')
-  const [editedContent, setEditedContent] = useState('')
-
-  useEffect(() => {
-    if (!isLoggedIn) return
-    if (role !== 'admin') router.push('/')
-    else fetchInfos()
-  }, [role, isLoggedIn])
 
   const fetchInfos = async () => {
     const res = await fetch('/api/info')
@@ -34,17 +26,23 @@ export default function AdminInfoPage() {
     setInfos(data)
   }
 
+  useEffect(() => {
+    fetchInfos()
+  }, [])
+
   const handleSubmit = async () => {
     if (!title || !content) return alert('請填寫標題與內容')
     setLoading(true)
     const res = await fetch('/api/info', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, content }),
+      body: JSON.stringify({ title, content, coverUrl, tags }),
     })
     if (res.ok) {
       setTitle('')
       setContent('')
+      setCoverUrl('')
+      setTags([])
       await fetchInfos()
     }
     setLoading(false)
@@ -61,112 +59,107 @@ export default function AdminInfoPage() {
     await fetchInfos()
   }
 
-  const handleEdit = (info: InfoEntry) => {
-    setEditingId(info._id)
-    setEditedTitle(info.title)
-    setEditedContent(info.content)
-  }
-
-  const handleSaveEdit = async (id: string) => {
-    if (!editedTitle || !editedContent) return
-    const res = await fetch('/api/info', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id, title: editedTitle, content: editedContent }),
-    })
-    if (res.ok) {
-      setEditingId(null)
-      await fetchInfos()
+  const handleAddTag = () => {
+    if (tagInput.trim() && !tags.includes(tagInput.trim())) {
+      setTags([...tags, tagInput.trim()])
+      setTagInput('')
     }
   }
 
-  if (!isLoggedIn) {
-    return <div className="text-center py-10 text-gray-500">載入中...</div>
+  const removeTag = (tag: string) => {
+    setTags(tags.filter(t => t !== tag))
   }
 
   return (
-    <div className="max-w-3xl mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold text-[#ff5a5f] mb-6">🛠️ 編輯資訊頁</h1>
+    <div className="max-w-3xl mx-auto">
+      <h1 className="text-2xl font-bold text-[#ff5a5f] mb-6">📢 公告管理</h1>
 
       {/* 新增段落 */}
       <div className="space-y-4 mb-10">
         <input
           className="w-full border p-2 rounded"
-          placeholder="標題（例：Grand Archive 是什麼？）"
+          placeholder="標題"
           value={title}
           onChange={e => setTitle(e.target.value)}
         />
         <textarea
-          className="w-full border p-2 rounded h-32"
+          className="w-full border p-2 rounded h-28"
           placeholder="內容"
           value={content}
           onChange={e => setContent(e.target.value)}
         />
+<div>
+  <p className="text-sm text-gray-500 mb-1">封面圖片</p>
+  <UploadImageButton onUpload={url => setCoverUrl(url)} />
+  {coverUrl && (
+    <img
+      src={coverUrl}
+      alt="預覽圖"
+      className="w-48 mt-4 rounded border shadow"
+    />
+  )}
+</div>
+
+        <div>
+          <p className="text-sm text-gray-500 mb-1">標籤（Enter 新增）</p>
+          <input
+            className="w-full border p-2 rounded"
+            placeholder="輸入標籤"
+            value={tagInput}
+            onChange={e => setTagInput(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleAddTag()}
+          />
+          <div className="flex flex-wrap gap-2 mt-2">
+            {tags.map(tag => (
+              <span
+                key={tag}
+                className="flex items-center gap-1 bg-[#ffeaea] text-[#ff5a5f] px-2 py-1 text-sm rounded"
+              >
+                #{tag}
+                <button onClick={() => removeTag(tag)} className="text-sm font-bold">×</button>
+              </span>
+            ))}
+          </div>
+        </div>
+
         <button
           onClick={handleSubmit}
           disabled={loading}
           className="bg-[#ff5a5f] text-white px-6 py-2 rounded hover:bg-[#e0474d] transition"
         >
-          {loading ? '儲存中...' : '新增段落'}
+          {loading ? '儲存中...' : '新增公告'}
         </button>
       </div>
 
-      {/* 現有段落 */}
-      <div className="space-y-6">
+      {/* 列表 */}
+      <div className="space-y-4">
         {infos.map(info => (
           <div
             key={info._id}
             className="bg-white border border-[#ffdede] rounded-lg p-4 shadow-sm"
           >
-            {editingId === info._id ? (
-              <>
-                <input
-                  className="w-full border p-2 rounded mb-2"
-                  value={editedTitle}
-                  onChange={e => setEditedTitle(e.target.value)}
-                />
-                <textarea
-                  className="w-full border p-2 rounded h-28"
-                  value={editedContent}
-                  onChange={e => setEditedContent(e.target.value)}
-                />
-                <div className="flex gap-4 mt-2">
-                  <button
-                    onClick={() => handleSaveEdit(info._id)}
-                    className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700"
-                  >
-                    儲存
-                  </button>
-                  <button
-                    onClick={() => setEditingId(null)}
-                    className="text-gray-500 hover:underline"
-                  >
-                    取消
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="flex justify-between items-start">
-                  <h3 className="text-lg font-semibold text-[#ff5a5f]">{info.title}</h3>
-                  <div className="flex gap-3 text-sm">
-                    <button
-                      onClick={() => handleEdit(info)}
-                      className="text-blue-500 hover:underline"
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-lg font-semibold text-[#ff5a5f]">{info.title}</h3>
+                <p className="text-sm text-gray-600 mt-1">{info.content}</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {info.tags?.map(tag => (
+                    <span
+                      key={tag}
+                      className="text-xs bg-[#ffeaea] text-[#ff5a5f] px-2 py-1 rounded"
                     >
-                      編輯
-                    </button>
-                    <button
-                      onClick={() => handleDelete(info._id)}
-                      className="text-red-500 hover:underline"
-                    >
-                      刪除
-                    </button>
-                  </div>
+                      #{tag}
+                    </span>
+                  ))}
                 </div>
-                <p className="mt-2 text-gray-700 whitespace-pre-wrap">{info.content}</p>
-              </>
-            )}
+              </div>
+              <button
+                onClick={() => handleDelete(info._id)}
+                className="text-sm text-red-500 hover:underline"
+              >
+                刪除
+              </button>
+            </div>
           </div>
         ))}
       </div>
