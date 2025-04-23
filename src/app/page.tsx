@@ -6,134 +6,127 @@ import Link from 'next/link'
 
 export default function HomePage() {
   return (
-    <main className="bg-[#fff2ee] text-[#333]">
-      {/* HERO */}
-      <section className="px-6 md:px-16 py-20 flex flex-col md:flex-row items-center justify-between gap-10">
-        <div className="max-w-xl space-y-6">
-          <motion.h1
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-5xl md:text-6xl font-extrabold text-[#ff5a5f]"
+    <main className="text-white font-sans">
+
+      {/* 全頁背景 */}
+      <div className="fixed inset-0 -z-50">
+        <Image src="/shira-bg.png" alt="Background" fill className="object-cover brightness-50" priority />
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      </div>
+
+      {/* HERO 區塊 */}
+      <section className="relative w-full min-h-screen flex items-center justify-center px-6 md:px-16">
+        <div className="text-center max-w-4xl mx-auto z-[1]">
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.8 }}
+            className="text-5xl md:text-6xl font-black text-white drop-shadow-xl mb-6"
           >
-            SparkGA
+            Spark your <span className="text-[#F28C7C]">Archive Adventure</span>
           </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="text-lg text-[#ff5a5f]"
-          >
-            一起玩、一起開箱、一起投稿的 TCG 創作社群。
-          </motion.p>
-          <div className="flex gap-4 mt-4">
+          <p className="text-base md:text-lg text-gray-300 mb-10">
+            A stylish portal for deck tech, meta shifts, and creative chaos — all things Grand Archive.
+          </p>
+          <div className="flex justify-center gap-4 flex-wrap">
             <Link href="/register">
-              <button className="bg-[#ff5a5f] text-white px-6 py-2 rounded hover:bg-[#e0474d] transition">
-                註冊帳號
+              <button className="bg-[#F28C7C] text-black px-6 py-3 rounded-full font-bold text-lg shadow-md hover:scale-105 hover:bg-[#f6a999] transition">
+                Join Now
               </button>
             </Link>
             <Link href="/guide">
-              <button className="border border-[#ff5a5f] text-[#ff5a5f] px-6 py-2 rounded hover:bg-[#ffeaea] transition">
-                新手教學
+              <button className="border border-[#F28C7C] text-[#F28C7C] px-6 py-3 rounded-full font-bold text-lg hover:bg-[#F28C7C] hover:text-black transition">
+                Beginner Guide
               </button>
             </Link>
           </div>
         </div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5 }}
-          className="w-full md:w-1/2 flex justify-center"
-        >
-          <Image
-            src="/hero-girls.png"
-            alt="Hero Banner"
-            width={500}
-            height={500}
-            className="rounded-xl shadow-lg"
-          />
-        </motion.div>
       </section>
 
-      {/* 精選卡片 */}
-      <section className="px-6 md:px-16 py-20">
-        <h2 className="text-3xl font-bold text-[#ff5a5f] text-center mb-10">熱門卡片展示</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {['Fractal of Rain', 'Creative Shock', 'Snow Fairy'].map((name, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white border border-[#ffdede] rounded-xl p-4 shadow-sm hover:shadow-md transition"
-            >
-              <Image
-                src={`/cards/card-${i + 1}.jpg`}
-                alt={name}
-                width={400}
-                height={250}
-                className="rounded-md mb-4"
-              />
-              <h3 className="text-lg font-semibold text-[#ff5a5f]">{name}</h3>
-              <p className="text-sm text-gray-500 mt-1">精選展示卡片</p>
-            </motion.div>
-          ))}
+      {/* Featured Cards */}
+      <section className="py-20 px-6 md:px-16 bg-black/70 backdrop-blur">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-[#F28C7C] mb-12 text-center">🔥 Featured Decks</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+            {["Fractal of Rain", "Creative Shock", "Snow Fairy"].map((name, i) => (
+              <motion.div 
+                key={i} 
+                className="bg-[#1a1a1a]/90 rounded-2xl overflow-hidden border border-neutral-600 hover:shadow-xl hover:scale-[1.015] transition-all"
+                whileHover={{ y: -4 }}
+              >
+                <Image
+                  src={`/cards/${name.toLowerCase().replace(/\s/g, '-')}.jpg`}
+                  alt={name}
+                  width={400}
+                  height={250}
+                  className="w-full h-56 object-cover"
+                />
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-[#F28C7C] mb-1">{name}</h3>
+                  <p className="text-sm text-gray-400">Deck Highlight</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* 關於我們 */}
-      <section className="px-6 md:px-16 py-24 bg-[#fff8f6] flex flex-col md:flex-row items-center gap-10">
-        <div className="w-full md:w-1/2">
+      {/* About Section */}
+      <section className="py-24 px-6 md:px-16 bg-black/70 backdrop-blur">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <Image
-            src="/ga-community.jpg"
-            alt="GA Community"
-            width={600}
+            src="/photos/community-event.jpg"
+            alt="About"
+            width={640}
             height={400}
-            className="rounded-xl shadow-md"
+            className="rounded-xl shadow-xl object-cover"
           />
+          <div className="space-y-6">
+            <h2 className="text-4xl font-bold text-[#F28C7C]">About SparkGA</h2>
+            <p className="text-gray-300 text-lg leading-relaxed">
+              Built by players, for players — SparkGA is where the Grand Archive community gathers to learn, create, and compete.
+            </p>
+            <Link href="/info" className="text-[#F28C7C] underline hover:text-[#f6a999] text-base font-semibold">
+              Learn More →
+            </Link>
+          </div>
         </div>
-        <div className="w-full md:w-1/2 space-y-4">
-          <h2 className="text-3xl font-bold text-[#ff5a5f]">關於 SparkGA</h2>
-          <p className="text-gray-600">
-            我們是一個專注於 Grand Archive 的玩家社群，讓你投稿、學習、交朋友，從卡圖到對戰全都照顧到！
-          </p>
-          <Link href="/info" className="text-[#ff5a5f] underline hover:text-[#e0474d] text-sm">
-            了解更多 &rarr;
+      </section>
+
+      {/* Video Highlights */}
+      <section className="py-24 px-6 md:px-16 bg-black/70 backdrop-blur text-center">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-4xl font-bold text-[#F28C7C] mb-4">🎥 Video Highlights</h2>
+          <p className="text-gray-400 mb-8 text-lg">Unboxings, breakdowns, and brutal matchups — fresh from our channel.</p>
+          <div className="flex justify-center">
+            <Image
+              src="/logos/sparkga-avatar.jpg"
+              alt="YouTube"
+              width={220}
+              height={220}
+              className="rounded-full shadow-xl border-4 border-[#F28C7C] object-cover"
+            />
+          </div>
+          <Link
+            href="https://youtube.com/@sparklesislife"
+            target="_blank"
+            className="inline-block mt-6 bg-[#F28C7C] text-black px-8 py-3 rounded-full font-bold text-lg hover:bg-[#f6a999] transition"
+          >
+            Visit Channel
           </Link>
         </div>
       </section>
 
-      {/* YouTube 區塊 */}
-      <section className="px-6 md:px-16 py-20 bg-white text-center">
-        <h2 className="text-3xl font-bold text-[#ff5a5f] mb-4">🎥 也來看看我們的 YouTube！</h2>
-        <p className="text-gray-700 mb-6">一起看我們的開箱 / 教學 / 大賽報導 ✨</p>
-        <div className="flex justify-center">
-  <Image
-    src="/youtube-banner.png"
-    alt="YouTube Banner"
-    width={300}
-    height={300}
-    className="rounded-full shadow-md border-4 border-[#ff5a5f] object-cover"
-  />
-</div>
-
-        <Link
-          href="https://youtube.com/@sparklesislife"
-          target="_blank"
-          className="inline-block mt-6 bg-[#ff5a5f] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#e0474d] transition"
-        >
-          🔔 前往 YouTube 頻道
-        </Link>
-      </section>
-
-      {/* CTA 加入社群 */}
-      <section className="px-6 md:px-16 py-20 bg-[#ff5a5f] text-white text-center">
-        <h2 className="text-3xl font-bold mb-4">立即加入 SparkGA</h2>
-        <p className="mb-6">投稿牌組、看實況、成為卡牌圈創作者！</p>
+      {/* Call To Action */}
+      <section className="py-24 px-6 md:px-16 bg-gradient-to-br from-[#F28C7C] to-[#e67462] text-black text-center">
+        <h2 className="text-4xl font-black mb-4">Ready to Spark the Game?</h2>
+        <p className="text-lg mb-6">Join tournaments, share your builds, and grow with the community.</p>
         <Link href="/register">
-          <button className="bg-white text-[#ff5a5f] font-semibold px-8 py-3 rounded-md hover:bg-[#fff8f6] transition">
-            立即註冊
+          <button className="bg-black text-[#F28C7C] font-bold px-8 py-3 rounded-full text-lg hover:bg-[#222] hover:text-[#f6a999] transition">
+            Join SparkGA
           </button>
         </Link>
       </section>
     </main>
-  )
+  );
 }
