@@ -26,7 +26,8 @@ h3 {
   @apply text-2xl font-semibold mb-2;
 }
 p {
-  @apply text-base md:text-lg text-muted-foreground leading-relaxed;
+  @apply text-lg leading-relaxed;
+  /* @apply text-base md:text-lg text-muted-foreground leading-relaxed; */
 }
 
 .btn {

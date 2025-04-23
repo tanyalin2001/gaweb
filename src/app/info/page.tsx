@@ -33,7 +33,7 @@ export default function InfoPage() {
       {/* 背景圖片 */}
       <div className="absolute inset-0 z-[-2]">
         <img
-          src="/shira-bg.png" 
+          src="/coronation-bg.png" 
           alt="background"
           className="w-full h-full object-cover"
         />
