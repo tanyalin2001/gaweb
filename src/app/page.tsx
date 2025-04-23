@@ -11,7 +11,7 @@ export default function HomePage() {
       <section className="relative w-full min-h-screen flex items-center justify-center px-6 md:px-16">
         <div className="absolute inset-0 -z-10">
           <Image
-            src="/extricatingTouch-bg.png"
+            src="/diao.png"
             alt="首頁背景"
             fill
             className="object-cover brightness-40"
@@ -99,7 +99,7 @@ export default function HomePage() {
       <section className="relative w-full min-h-screen flex items-center justify-center px-6 md:px-16">
         <div className="absolute inset-0 -z-10">
           <Image
-            src="/burstasunder-bg.png"
+            src="/extricatingTouch-bg.png"
             alt="關於我們背景"
             fill
             className="object-cover object-top brightness-40"
@@ -137,10 +137,10 @@ export default function HomePage() {
       <div className="h-[2px] bg-gradient-to-r from-[#f28c7c]/0 via-[#f28c7c] to-[#f28c7c]/0 mx-auto w-2/3" />
 
       {/* 區塊 4：影片精選 */}
-      <section className="relative py-24 px-6 md:px-16 text-center">
+      <section className="relative w-full min-h-screen flex items-center justify-center px-6 md:px-16">
         <div className="absolute inset-0 -z-10">
           <Image
-            src="/shira-bg.png"
+            src="/charm-bg.png"
             alt="影片背景"
             fill
             className="object-cover brightness-40"
@@ -148,49 +148,53 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
         </div>
 
-        <div className="max-w-5xl mx-auto relative z-10">
-          <h2 className="text-4xl font-bold text-[#F28C7C] mb-4 drop-shadow">
-            影片精選
-          </h2>
-          <p className="text-gray-200 mb-8 text-lg drop-shadow-sm">
-            開箱、解析、實戰精華，全部來自我們的頻道。
-          </p>
-          <div className="flex justify-center">
-            <Image
-              src="/youtube-banner.png"
-              alt="YouTube 頻道"
-              width={220}
-              height={220}
-              className="rounded-full shadow-xl border-4 border-[#F28C7C] object-cover"
-            />
-          </div>
-          <Link
-            href="https://youtube.com/@sparklesislife"
-            target="_blank"
-            className="inline-block mt-6 bg-[#F28C7C] text-black px-8 py-3 rounded-full font-bold text-lg hover:bg-[#f6a999] transition"
-          >
-            前往頻道
-          </Link>
-        </div>
+        <div className="max-w-5xl mx-auto relative z-10 text-center">
+  <h2 className="text-4xl font-bold text-[#F28C7C] mb-4 drop-shadow">
+    影片精選
+  </h2>
+  <p className="text-gray-200 mb-8 text-lg drop-shadow-sm">
+    開箱、解析、實戰精華，全部來自我們的頻道。
+  </p>
+  <div className="flex justify-center">
+    <Image
+      src="/youtube-banner.png"
+      alt="YouTube 頻道"
+      width={220}
+      height={220}
+      className="rounded-full shadow-xl border-4 border-[#F28C7C] object-cover"
+    />
+  </div>
+  <Link
+    href="https://youtube.com/@sparklesislife"
+    target="_blank"
+    className="inline-block mt-6 bg-[#F28C7C] text-black px-8 py-3 rounded-full font-bold text-lg hover:bg-[#f6a999] transition"
+  >
+    前往頻道
+  </Link>
+</div>
+
       </section>
 
       {/* 分隔線 */}
       <div className="h-[2px] bg-gradient-to-r from-[#f28c7c]/0 via-[#f28c7c] to-[#f28c7c]/0 mx-auto w-2/3" />
 
       {/* 區塊 5：行動號召 */}
-      <section className="py-24 px-6 md:px-16 bg-gradient-to-br from-[#F28C7C] to-[#e67462] text-black text-center">
-        <h2 className="text-4xl font-black mb-4 drop-shadow-sm">
-          準備好加入戰局了嗎？
-        </h2>
-        <p className="text-lg mb-6 drop-shadow-sm">
-          參加比賽、分享牌表、一起和社群成長。
-        </p>
-        <Link href="/register">
-          <button className="bg-black text-[#F28C7C] font-bold px-8 py-3 rounded-full text-lg hover:bg-[#222] hover:text-[#f6a999] transition">
-            加入 SparkGA
-          </button>
-        </Link>
-      </section>
+      <section className="py-12 px-6 md:px-16 bg-black backdrop-blur-sm text-white text-center">
+  <h2 className="text-4xl font-black mb-4 drop-shadow-sm">
+    準備好加入戰局了嗎？
+  </h2>
+  <p className="text-lg mb-6 drop-shadow-sm">
+    參加比賽、分享牌表、一起和社群成長。
+  </p>
+  <Link href="/register">
+    <button className="bg-[#F28C7C] text-black font-bold px-8 py-3 rounded-full text-lg hover:bg-[#f6a999] transition">
+      加入 SparkGA
+    </button>
+  </Link>
+</section>
+
+
+
     </main>
   );
 }

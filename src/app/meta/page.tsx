@@ -8,18 +8,21 @@ export default function FeatureDecksPage() {
   return (
     <main className="relative min-h-screen text-white font-sans">
       {/* 背景圖層 */}
-      <div className="absolute inset-0 z-[-2]">
+      <div className="fixed  inset-0 z-[-2]">
         <Image
-          src="/bg.png" // 換成你想用的背景圖
-          alt="Background"
+          src="/incap-bg.png"
+          alt="Guide Background"
           fill
           className="object-cover object-center"
         />
       </div>
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm z-[-1]" />
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-md z-[-1]" />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-16">
-        <h1 className="text-4xl font-bold text-[#F28C7C] mb-6">精選牌組</h1>
+      <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-8 pt-28 pb-20 space-y-10">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] text-center drop-shadow-[0_1px_0_rgba(0,0,0,0.9)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.6)]">
+          精選牌組
+        </h1>
+
         <p className="text-gray-300 mb-10">
           每週更新的熱門精選牌組，由我們推薦，讓你掌握最潮卡組搭配！
         </p>

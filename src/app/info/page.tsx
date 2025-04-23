@@ -43,8 +43,8 @@ export default function InfoPage() {
       {/* 半透明遮罩 */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm z-[-1]" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-10 pt-36 pb-20">
-        <h1 className="text-4xl font-extrabold text-center text-[#F28C7C] mb-16 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+      <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-8 pt-28 pb-20 space-y-10">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] text-center drop-shadow-[0_1px_0_rgba(0,0,0,0.9)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.6)]">
           最新公告
         </h1>
 
