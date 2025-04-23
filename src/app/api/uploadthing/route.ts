@@ -1,1 +1,1 @@
-export { GET, POST } from './core'
+export { GET, POST } from "./core";

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const InfoSchema = new mongoose.Schema(
   {
@@ -9,7 +9,7 @@ const InfoSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
-)
+  },
+);
 
-export default mongoose.models.Info || mongoose.model('Info', InfoSchema)
+export default mongoose.models.Info || mongoose.model("Info", InfoSchema);

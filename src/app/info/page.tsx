@@ -1,39 +1,40 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { motion } from "framer-motion";
 
 interface InfoEntry {
-  _id: string
-  title: string
-  content: string
-  coverUrl?: string
-  createdAt: string
-  tags?: string[]
+  _id: string;
+  title: string;
+  content: string;
+  coverUrl?: string;
+  createdAt: string;
+  tags?: string[];
 }
 
 export default function InfoPage() {
-  const [posts, setPosts] = useState<InfoEntry[]>([])
-  const searchParams = useSearchParams()
-  const filterTag = searchParams.get('tag')
+  const [posts, setPosts] = useState<InfoEntry[]>([]);
+  const searchParams = useSearchParams();
+  const filterTag = searchParams.get("tag");
 
   useEffect(() => {
-    fetch('/api/info')
-      .then(res => res.json())
-      .then(data => setPosts(data))
-  }, [])
+    fetch("/api/info")
+      .then((res) => res.json())
+      .then((data) => setPosts(data));
+  }, []);
 
   const filtered = filterTag
-    ? posts.filter(p => p.tags?.includes(filterTag))
-    : posts
+    ? posts.filter((p) => p.tags?.includes(filterTag))
+    : posts;
 
   return (
     <main className="relative min-h-screen text-white font-sans">
       {/* 背景圖片 */}
       <div className="absolute inset-0 z-[-2]">
         <img
-          src="/coronation-bg.png" 
+          src="/coronation-bg.png"
           alt="background"
           className="w-full h-full object-cover"
         />
@@ -42,26 +43,29 @@ export default function InfoPage() {
       {/* 半透明遮罩 */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm z-[-1]" />
 
-      <div className="px-4 md:px-10 py-16 relative z-10">
-        <h1 className="text-4xl font-extrabold text-center text-[#F28C7C] mb-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-10 pt-36 pb-20">
+        <h1 className="text-4xl font-extrabold text-center text-[#F28C7C] mb-16 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
           最新公告
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {filtered.map(post => (
-            <Link
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {filtered.map((post, index) => (
+            <motion.div
               key={post._id}
-              href={`/info/${post._id}`}
-              className="group flex flex-col md:flex-row items-stretch border border-[#F28C7C]/20 rounded-xl overflow-hidden bg-[#121212]/80 hover:bg-[#1a1a1a]/90 shadow-md transition-all"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="group flex flex-col md:flex-row items-stretch border border-[#F28C7C]/20 rounded-2xl overflow-hidden bg-[#121212]/80 hover:bg-[#1a1a1a]/90 shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <img
-                src={post.coverUrl || '/default-cover.jpg'}
+                src={post.coverUrl || "/default-cover.jpg"}
                 alt={post.title}
-                className="w-full md:w-56 h-44 md:h-auto object-cover"
+                className="w-full md:w-56 h-44 md:h-auto object-cover scale-100 group-hover:scale-105 transition-transform duration-300"
               />
               <div className="flex-1 p-6 flex flex-col justify-between">
                 <div>
-                  <h2 className="text-xl font-bold text-white group-hover:text-[#F28C7C] mb-2">
+                  <h2 className="text-xl font-bold text-white group-hover:text-[#F28C7C] mb-2 transition-colors duration-200">
                     {post.title}
                   </h2>
                   <p className="text-sm text-gray-300 line-clamp-3">
@@ -69,9 +73,11 @@ export default function InfoPage() {
                   </p>
                 </div>
                 <div className="mt-4 flex justify-between items-center text-xs text-gray-400">
-                  <span>{new Date(post.createdAt).toLocaleDateString('zh-TW')}</span>
+                  <span>
+                    {new Date(post.createdAt).toLocaleDateString("zh-TW")}
+                  </span>
                   <div className="flex gap-2 flex-wrap">
-                    {post.tags?.map(tag => (
+                    {post.tags?.map((tag) => (
                       <Link
                         key={tag}
                         href={`/info?tag=${tag}`}
@@ -83,10 +89,10 @@ export default function InfoPage() {
                   </div>
                 </div>
               </div>
-            </Link>
+            </motion.div>
           ))}
         </div>
       </div>
     </main>
-  )
+  );
 }

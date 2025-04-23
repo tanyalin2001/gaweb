@@ -1,93 +1,93 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useAuth } from '@/hooks/useAuth'
+import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function SettingsPage() {
-  const { email, username, role, refresh } = useAuth()
+  const { email, username, role, refresh } = useAuth();
 
-  const [newUsername, setNewUsername] = useState(username)
-  const [usernameMessage, setUsernameMessage] = useState('')
-  const [usernameError, setUsernameError] = useState('')
+  const [newUsername, setNewUsername] = useState(username);
+  const [usernameMessage, setUsernameMessage] = useState("");
+  const [usernameError, setUsernameError] = useState("");
 
-  const [oldPassword, setOldPassword] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [passwordMessage, setPasswordMessage] = useState('')
-  const [passwordError, setPasswordError] = useState('')
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleUsernameChange = async () => {
-    if (!newUsername || newUsername === username) return
+    if (!newUsername || newUsername === username) return;
 
-    setLoading(true)
-    setUsernameError('')
-    setUsernameMessage('')
+    setLoading(true);
+    setUsernameError("");
+    setUsernameMessage("");
 
-    const res = await fetch('/api/settings/update-username', {
-      method: 'POST',
+    const res = await fetch("/api/settings/update-username", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify({ newUsername }),
-    })
+    });
 
-    const data = await res.json()
+    const data = await res.json();
     if (res.ok && data.token) {
-      localStorage.setItem('token', data.token)
-      refresh?.()
-      setUsernameMessage('✅ 使用者名稱已更新')
-      window.location.reload()
+      localStorage.setItem("token", data.token);
+      refresh?.();
+      setUsernameMessage("✅ 使用者名稱已更新");
+      window.location.reload();
     } else {
-      setUsernameError(data.message || '名稱更新失敗')
+      setUsernameError(data.message || "名稱更新失敗");
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const handlePasswordChange = async () => {
-    setPasswordError('')
-    setPasswordMessage('')
+    setPasswordError("");
+    setPasswordMessage("");
 
     if (!oldPassword || !newPassword || !confirmPassword) {
-      setPasswordError('請填寫所有欄位')
-      return
+      setPasswordError("請填寫所有欄位");
+      return;
     }
 
     if (newPassword.length < 8) {
-      setPasswordError('新密碼至少需 8 碼')
-      return
+      setPasswordError("新密碼至少需 8 碼");
+      return;
     }
 
     if (newPassword !== confirmPassword) {
-      setPasswordError('請確認兩次新密碼一致')
-      return
+      setPasswordError("請確認兩次新密碼一致");
+      return;
     }
 
-    setLoading(true)
-    const res = await fetch('/api/settings/update-password', {
-      method: 'POST',
+    setLoading(true);
+    const res = await fetch("/api/settings/update-password", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify({ oldPassword, newPassword }),
-    })
+    });
 
-    const data = await res.json()
+    const data = await res.json();
     if (res.ok) {
-      setPasswordMessage('✅ 密碼已更新')
-      setOldPassword('')
-      setNewPassword('')
-      setConfirmPassword('')
+      setPasswordMessage("✅ 密碼已更新");
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
     } else {
-      setPasswordError(data.message || '密碼更新失敗')
+      setPasswordError(data.message || "密碼更新失敗");
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <div className="max-w-xl mx-auto mt-12 p-6 border rounded-lg shadow-md bg-white space-y-8">
@@ -95,14 +95,18 @@ export default function SettingsPage() {
 
       {/* 使用者名稱 */}
       <div>
-        <label className="block font-medium text-gray-700 mb-1">使用者名稱</label>
+        <label className="block font-medium text-gray-700 mb-1">
+          使用者名稱
+        </label>
         <input
           type="text"
           value={newUsername}
           onChange={(e) => setNewUsername(e.target.value)}
           className="w-full px-3 py-2 border rounded-md"
         />
-        {usernameError && <p className="text-sm text-red-600 mt-1">{usernameError}</p>}
+        {usernameError && (
+          <p className="text-sm text-red-600 mt-1">{usernameError}</p>
+        )}
         <button
           onClick={handleUsernameChange}
           className="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-40"
@@ -110,7 +114,9 @@ export default function SettingsPage() {
         >
           儲存使用者名稱
         </button>
-        {usernameMessage && <p className="text-green-600 text-sm mt-2">{usernameMessage}</p>}
+        {usernameMessage && (
+          <p className="text-green-600 text-sm mt-2">{usernameMessage}</p>
+        )}
       </div>
 
       {/* Email / 角色 */}
@@ -153,7 +159,9 @@ export default function SettingsPage() {
           className="w-full px-3 py-2 border rounded-md mb-2"
         />
 
-        <label className="block font-medium text-gray-700 mb-1">確認新密碼</label>
+        <label className="block font-medium text-gray-700 mb-1">
+          確認新密碼
+        </label>
         <input
           type="password"
           value={confirmPassword}
@@ -161,7 +169,9 @@ export default function SettingsPage() {
           className="w-full px-3 py-2 border rounded-md mb-2"
         />
 
-        {passwordError && <p className="text-sm text-red-600 mt-1">{passwordError}</p>}
+        {passwordError && (
+          <p className="text-sm text-red-600 mt-1">{passwordError}</p>
+        )}
         <button
           onClick={handlePasswordChange}
           className="mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-40"
@@ -169,8 +179,10 @@ export default function SettingsPage() {
         >
           儲存密碼
         </button>
-        {passwordMessage && <p className="text-green-600 text-sm mt-2">{passwordMessage}</p>}
+        {passwordMessage && (
+          <p className="text-green-600 text-sm mt-2">{passwordMessage}</p>
+        )}
       </div>
     </div>
-  )
+  );
 }

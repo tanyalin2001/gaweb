@@ -1,23 +1,23 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 interface Post {
-  _id: string
-  title: string
-  author: string
-  status: string
-  createdAt: string
+  _id: string;
+  title: string;
+  author: string;
+  status: string;
+  createdAt: string;
 }
 
 export default function AdminPostPage() {
-  const [posts, setPosts] = useState<Post[]>([])
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    fetch('/api/posts')
-      .then(res => res.json())
-      .then(data => setPosts(data))
-  }, [])
+    fetch("/api/posts")
+      .then((res) => res.json())
+      .then((data) => setPosts(data));
+  }, []);
 
   return (
     <div>
@@ -34,7 +34,7 @@ export default function AdminPostPage() {
             </tr>
           </thead>
           <tbody>
-            {posts.map(post => (
+            {posts.map((post) => (
               <tr key={post._id} className="border-t hover:bg-gray-50">
                 <td className="px-4 py-3">{post.title}</td>
                 <td className="px-4 py-3 text-gray-600">{post.author}</td>
@@ -43,9 +43,13 @@ export default function AdminPostPage() {
                   {new Date(post.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-4 py-3">
-                  <button className="text-sm text-blue-600 hover:underline">查看</button>
-                  {' / '}
-                  <button className="text-sm text-red-600 hover:underline">刪除</button>
+                  <button className="text-sm text-blue-600 hover:underline">
+                    查看
+                  </button>
+                  {" / "}
+                  <button className="text-sm text-red-600 hover:underline">
+                    刪除
+                  </button>
                 </td>
               </tr>
             ))}
@@ -60,5 +64,5 @@ export default function AdminPostPage() {
         </table>
       </div>
     </div>
-  )
+  );
 }

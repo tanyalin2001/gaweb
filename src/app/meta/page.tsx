@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import Image from 'next/image'
-import { featuredDecks } from '../data/deckData'
+import Link from "next/link";
+import Image from "next/image";
+import { featuredDecks } from "../data/deckData";
 
 export default function FeatureDecksPage() {
   return (
@@ -25,7 +25,7 @@ export default function FeatureDecksPage() {
         </p>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {featuredDecks.map(deck => (
+          {featuredDecks.map((deck) => (
             <Link
               href={`/meta/${deck.id}`}
               key={deck.id}
@@ -39,14 +39,18 @@ export default function FeatureDecksPage() {
                 className="w-full h-48 object-cover"
               />
               <div className="p-4">
-                <h2 className="text-xl font-bold text-[#F28C7C]">{deck.title}</h2>
+                <h2 className="text-xl font-bold text-[#F28C7C]">
+                  {deck.title}
+                </h2>
                 <p className="text-gray-300 mt-1 text-sm">{deck.description}</p>
-                <span className="inline-block mt-2 text-sm text-[#F28C7C] underline">查看詳情</span>
+                <span className="inline-block mt-2 text-sm text-[#F28C7C] underline">
+                  查看詳情
+                </span>
               </div>
             </Link>
           ))}
         </div>
       </div>
     </main>
-  )
+  );
 }

@@ -1,12 +1,12 @@
-'use client'
+"use client";
 
-import { useParams } from 'next/navigation'
-import Image from 'next/image'
-import { featuredDecks } from '../../data/deckData'
+import { useParams } from "next/navigation";
+import Image from "next/image";
+import { featuredDecks } from "../../data/deckData";
 
 export default function FeatureDeckDetailPage() {
-  const { id } = useParams()
-  const deck = featuredDecks.find(deck => deck.id === id)
+  const { id } = useParams();
+  const deck = featuredDecks.find((deck) => deck.id === id);
 
   if (!deck) {
     return (
@@ -24,7 +24,7 @@ export default function FeatureDeckDetailPage() {
           找不到此牌組。
         </div>
       </main>
-    )
+    );
   }
 
   return (
@@ -54,10 +54,12 @@ export default function FeatureDeckDetailPage() {
         <h2 className="text-2xl font-bold text-[#F28C7C] mb-4">📦 卡片組成</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-200 pl-4">
           {deck.cards.map((card, index) => (
-            <li key={index} className="text-sm">{card}</li>
+            <li key={index} className="text-sm">
+              {card}
+            </li>
           ))}
         </ul>
       </div>
     </main>
-  )
+  );
 }

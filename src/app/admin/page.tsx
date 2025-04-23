@@ -1,5 +1,5 @@
-'use client';
-import { useAuth } from '@/hooks/useAuth';
+"use client";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function AdminPage() {
   const auth = useAuth();
@@ -8,7 +8,7 @@ export default function AdminPage() {
     return <p className="text-red-600">請先登入才能進入後台管理頁面。</p>;
   }
 
-  if (auth.role !== 'admin') {
+  if (auth.role !== "admin") {
     return <p className="text-red-600">你沒有管理員權限。</p>;
   }
 

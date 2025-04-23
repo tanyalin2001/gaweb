@@ -1,17 +1,21 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import Image from 'next/image'
-import Link from 'next/link'
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
     <main className="text-white font-sans">
-
       {/* 區塊 1：首頁引導 */}
       <section className="relative w-full min-h-screen flex items-center justify-center px-6 md:px-16">
         <div className="absolute inset-0 -z-10">
-          <Image src="/extricatingTouch-bg.png" alt="首頁背景" fill className="object-cover brightness-40" />
+          <Image
+            src="/extricatingTouch-bg.png"
+            alt="首頁背景"
+            fill
+            className="object-cover brightness-40"
+          />
           <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
         </div>
 
@@ -27,7 +31,7 @@ export default function HomePage() {
           <p className="text-lg md:text-lg text-white drop-shadow-sm mb-10">
             整合套牌解析、牌表趨勢、創意混亂 —— 一起進入 Grand Archive 的世界。
           </p>
-          
+
           <div className="flex justify-center gap-4 flex-wrap">
             <Link href="/register">
               <button className="bg-[#F28C7C] text-black px-6 py-3 rounded-full font-bold text-lg shadow-md hover:scale-105 hover:bg-[#f6a999] transition">
@@ -49,12 +53,19 @@ export default function HomePage() {
       {/* 區塊 2：特色套牌 */}
       <section className="relative w-full min-h-screen flex items-center justify-center px-6 md:px-16">
         <div className="absolute inset-0 -z-10">
-          <Image src="/seasonsend-bg.png" alt="特色套牌背景" fill className="object-cover object-top brightness-40" />
+          <Image
+            src="/seasonsend-bg.png"
+            alt="特色套牌背景"
+            fill
+            className="object-cover object-top brightness-40"
+          />
           <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
         </div>
 
         <div className="max-w-7xl mx-auto z-10">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-[#F28C7C] mb-12 text-center drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]">特色套牌</h2>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-[#F28C7C] mb-12 text-center drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]">
+            特色套牌
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
             {["風戰士", "風 Shadowstrike Tristan", "火光刺"].map((name, i) => (
               <motion.div
@@ -70,7 +81,9 @@ export default function HomePage() {
                   className="w-full h-56 object-cover object-[center_20%]"
                 />
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-[#F28C7C] mb-1">{name}</h3>
+                  <h3 className="text-xl font-bold text-[#F28C7C] mb-1">
+                    {name}
+                  </h3>
                   <p className="text-sm text-gray-200">套牌重點</p>
                 </div>
               </motion.div>
@@ -85,7 +98,12 @@ export default function HomePage() {
       {/* 區塊 3：關於我們 */}
       <section className="relative w-full min-h-screen flex items-center justify-center px-6 md:px-16">
         <div className="absolute inset-0 -z-10">
-          <Image src="/burstasunder-bg.png" alt="關於我們背景" fill className="object-cover object-top brightness-40" />
+          <Image
+            src="/burstasunder-bg.png"
+            alt="關於我們背景"
+            fill
+            className="object-cover object-top brightness-40"
+          />
           <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
         </div>
 
@@ -98,11 +116,17 @@ export default function HomePage() {
             className="rounded-xl shadow-xl object-cover"
           />
           <div className="space-y-6">
-            <h2 className="text-4xl font-bold text-[#F28C7C] drop-shadow">關於 SparkGA</h2>
+            <h2 className="text-4xl font-bold text-[#F28C7C] drop-shadow">
+              關於 SparkGA
+            </h2>
             <p className="text-gray-100 text-lg leading-relaxed drop-shadow-sm">
-              由玩家打造，為玩家服務 — SparkGA 是 Grand Archive 玩家社群的聚集地，分享、學習、成長的舞台。
+              由玩家打造，為玩家服務 — SparkGA 是 Grand Archive
+              玩家社群的聚集地，分享、學習、成長的舞台。
             </p>
-            <Link href="/info" className="text-[#F28C7C] underline hover:text-[#f6a999] text-base font-semibold">
+            <Link
+              href="/info"
+              className="text-[#F28C7C] underline hover:text-[#f6a999] text-base font-semibold"
+            >
               瞭解更多 →
             </Link>
           </div>
@@ -115,13 +139,22 @@ export default function HomePage() {
       {/* 區塊 4：影片精選 */}
       <section className="relative py-24 px-6 md:px-16 text-center">
         <div className="absolute inset-0 -z-10">
-          <Image src="/shira-bg.png" alt="影片背景" fill className="object-cover brightness-40" />
+          <Image
+            src="/shira-bg.png"
+            alt="影片背景"
+            fill
+            className="object-cover brightness-40"
+          />
           <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
         </div>
 
         <div className="max-w-5xl mx-auto relative z-10">
-          <h2 className="text-4xl font-bold text-[#F28C7C] mb-4 drop-shadow">影片精選</h2>
-          <p className="text-gray-200 mb-8 text-lg drop-shadow-sm">開箱、解析、實戰精華，全部來自我們的頻道。</p>
+          <h2 className="text-4xl font-bold text-[#F28C7C] mb-4 drop-shadow">
+            影片精選
+          </h2>
+          <p className="text-gray-200 mb-8 text-lg drop-shadow-sm">
+            開箱、解析、實戰精華，全部來自我們的頻道。
+          </p>
           <div className="flex justify-center">
             <Image
               src="/youtube-banner.png"
@@ -146,8 +179,12 @@ export default function HomePage() {
 
       {/* 區塊 5：行動號召 */}
       <section className="py-24 px-6 md:px-16 bg-gradient-to-br from-[#F28C7C] to-[#e67462] text-black text-center">
-        <h2 className="text-4xl font-black mb-4 drop-shadow-sm">準備好加入戰局了嗎？</h2>
-        <p className="text-lg mb-6 drop-shadow-sm">參加比賽、分享牌表、一起和社群成長。</p>
+        <h2 className="text-4xl font-black mb-4 drop-shadow-sm">
+          準備好加入戰局了嗎？
+        </h2>
+        <p className="text-lg mb-6 drop-shadow-sm">
+          參加比賽、分享牌表、一起和社群成長。
+        </p>
         <Link href="/register">
           <button className="bg-black text-[#F28C7C] font-bold px-8 py-3 rounded-full text-lg hover:bg-[#222] hover:text-[#f6a999] transition">
             加入 SparkGA
@@ -155,5 +192,5 @@ export default function HomePage() {
         </Link>
       </section>
     </main>
-  )
+  );
 }

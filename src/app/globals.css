@@ -8,28 +8,29 @@
 
 html,
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   letter-spacing: 0.01em;
-  font-feature-settings: "pnum" on, "lnum" on;
+  font-feature-settings:
+    "pnum" on,
+    "lnum" on;
   font-size: 16px;
   line-height: 1.6;
   scroll-behavior: smooth;
 }
 
-h1 {
+/* h1 {
   @apply text-4xl md:text-6xl font-bold mb-6 leading-tight;
 }
 h2 {
-  @apply text-3xl md:text-4xl font-semibold mb-4;
+  @apply text-2xl md:text-2xl font-semibold mb-4;
 }
 h3 {
-  @apply text-2xl font-semibold mb-2;
+  @apply text-2xl font-semibold;
 }
 p {
-  @apply text-lg leading-relaxed;
+  @apply text-base leading-relaxed;
   /* @apply text-base md:text-lg text-muted-foreground leading-relaxed; */
-}
-
+/* } */
 .btn {
   @apply inline-block text-center font-semibold rounded-full transition-all duration-200;
 }
