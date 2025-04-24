@@ -12,17 +12,19 @@ export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-60 bg-white border-r shadow-sm h-screen sticky top-0 left-0 p-6">
-      <h1 className="text-2xl font-bold text-[#ff5a5f] mb-8">SparkGA Admin</h1>
-      <nav className="space-y-4">
+    <aside className="w-60 h-screen sticky top-0 left-0 bg-[#1c1c1c] border-r border-[#333] shadow-md p-6 text-white pt-32">
+      <h1 className="text-2xl font-bold text-[#F28C7C] mb-8 drop-shadow-sm">
+        SparkGA Admin
+      </h1>
+      <nav className="space-y-3">
         {navItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
-            className={`block px-3 py-2 rounded ${
+            className={`block px-4 py-2 rounded transition ${
               pathname.startsWith(item.href)
-                ? "bg-[#ffeaea] text-[#ff5a5f] font-semibold"
-                : "text-gray-700 hover:bg-gray-100"
+                ? "bg-[#F28C7C]/20 text-[#F28C7C] font-semibold"
+                : "text-gray-300 hover:bg-[#333] hover:text-white"
             }`}
           >
             {item.label}
