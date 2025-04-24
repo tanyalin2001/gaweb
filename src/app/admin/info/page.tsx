@@ -71,7 +71,7 @@ export default function AdminInfoPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-3xl mx-auto pt-32">
       <h1 className="text-2xl font-bold text-[#ff5a5f] mb-6">📢 公告管理</h1>
 
       {/* 新增段落 */}
