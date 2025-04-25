@@ -20,7 +20,7 @@ export default function GuideLayout({ children }: { children: ReactNode }) {
       <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[-1]" />
 
       {/* 內文容器保持原樣 */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-10 pt-28 pb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 pt-28 pb-20">
         {children}
       </div>
     </main>

@@ -1,26 +1,8 @@
 import { notFound } from "next/navigation";
-
-interface InfoEntry {
-  _id: string;
-  title: string;
-  content: string;
-  coverUrl?: string;
-  createdAt: string;
-}
+import { hardcodedPosts, InfoEntry } from "@/lib/infoData";
 
 async function getPost(id: string): Promise<InfoEntry | null> {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/api/info/${id}`,
-      {
-        cache: "no-store",
-      },
-    );
-    if (!res.ok) return null;
-    return await res.json();
-  } catch {
-    return null;
-  }
+  return hardcodedPosts.find((p) => p._id === id) ?? null;
 }
 
 export default async function InfoDetailPage({
@@ -29,25 +11,43 @@ export default async function InfoDetailPage({
   params: { id: string };
 }) {
   const post = await getPost(params.id);
-
   if (!post) return notFound();
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-[#ff5a5f] mb-4">{post.title}</h1>
-      <p className="text-sm text-gray-400 mb-6">
-        發布日期：{new Date(post.createdAt).toLocaleDateString()}
-      </p>
-      {post.coverUrl && (
+    <main className="relative min-h-screen text-white font-sans">
+      {/* 背景圖層 */}
+      <div className="absolute inset-0 z-[-2]">
         <img
-          src={post.coverUrl}
-          alt="Cover"
-          className="rounded-lg mb-6 w-full max-h-[400px] object-cover"
+          src="/coronation-bg.png"
+          alt="background"
+          className="w-full h-full object-cover"
         />
-      )}
-      <div className="text-gray-800 whitespace-pre-line leading-relaxed">
-        {post.content}
       </div>
-    </div>
+
+      {/* 半透明遮罩 */}
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm z-[-1]" />
+
+      <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-10 pt-32 pb-20 space-y-10">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] text-center">
+          {post.title}
+        </h1>
+
+        <p className="text-sm text-gray-400 text-center">
+          發布日期：{new Date(post.createdAt).toLocaleDateString("zh-TW")}
+        </p>
+
+        {post.coverUrl && (
+          <img
+            src={post.coverUrl}
+            alt="封面圖片"
+            className="rounded-xl w-full max-h-[500px] object-cover shadow-md"
+          />
+        )}
+
+        <article className="text-lg leading-loose text-gray-200 whitespace-pre-line bg-[#1a1a1a]/80 p-6 rounded-2xl shadow-inner border border-white/10">
+          {post.content}
+        </article>
+      </div>
+    </main>
   );
 }
