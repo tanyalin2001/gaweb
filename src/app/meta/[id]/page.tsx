@@ -42,7 +42,7 @@ export default function FeatureDeckDetailPage() {
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-8 pt-28 pb-20 space-y-10">
         <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] text-center drop-shadow-[0_1px_0_rgba(0,0,0,0.9)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.6)]">
-        {deck.title}
+          {deck.title}
         </h1>
         <h1 className="text-4xl font-bold text-[#F28C7C] mb-6"></h1>
         <Image
