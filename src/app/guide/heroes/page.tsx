@@ -7,7 +7,9 @@ export default function ClassesPage() {
   return (
     <GuideLayout>
       <section className="space-y-10">
-        <h2 className="text-3xl font-bold text-[#F28C7C]">英雄介紹</h2>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] text-center drop-shadow-[0_1px_0_rgba(0,0,0,0.9)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.6)]">
+          英雄介紹
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {[
             {
@@ -104,10 +106,10 @@ export default function ClassesPage() {
                   className="object-contain max-h-full w-auto mx-auto"
                 />
               </div>
-              <h3 className="text-xl font-bold text-white text-center mt-4">
+              <h2 className="text-xl font-bold text-white text-center mt-4">
                 {champ.name}
-              </h3>
-              <p className="text-gray-300 text-sm text-center mt-2">
+              </h2>
+              <p className="text-white-300 text-lg text-center mt-2">
                 {champ.desc}
               </p>
             </div>

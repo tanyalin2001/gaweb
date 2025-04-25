@@ -7,7 +7,9 @@ export default function HeroesPage() {
   return (
     <GuideLayout>
       <section className="space-y-6">
-        <h2 className="text-3xl font-bold text-[#F28C7C]">職業介紹</h2>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] text-center drop-shadow-[0_1px_0_rgba(0,0,0,0.9)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.6)]">
+          職業介紹
+        </h1>
         <p className="text-gray-300">
           每位英雄都有職業屬性，而 GA 目前總共有 7
           種職業，分別是：戰士、法師、守護者、遊俠、刺客、馴獸師、牧師。
