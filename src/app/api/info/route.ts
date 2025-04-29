@@ -1,36 +1,42 @@
-import { NextRequest, NextResponse } from "next/server";
-import { connectDB } from "@/lib/mongodb";
-import Info from "@/models/Info";
+import { NextResponse } from "next/server";
+import path from "path";
+import fs from "fs/promises";
+import matter from "gray-matter";
 
 export async function GET() {
-  await connectDB();
-  const infos = await Info.find().sort({ createdAt: -1 });
-  return NextResponse.json(infos);
-}
+  const infoDir = path.join(process.cwd(), "src", "content", "info");
 
-export async function POST(req: NextRequest) {
-  await connectDB();
-  const { title, content, coverUrl, tags } = await req.json();
-  const info = await Info.create({
-    title,
-    content,
-    coverUrl,
-    tags: tags || [],
-    createdAt: new Date(),
-  });
-  return NextResponse.json(info);
-}
 
-export async function PUT(req: NextRequest) {
-  await connectDB();
-  const { id, title, content } = await req.json();
-  await Info.findByIdAndUpdate(id, { title, content });
-  return NextResponse.json({ message: "Updated" });
-}
+  try {
+    const files = await fs.readdir(infoDir);
+    const posts = [];
 
-export async function DELETE(req: NextRequest) {
-  await connectDB();
-  const { id } = await req.json();
-  await Info.findByIdAndDelete(id);
-  return NextResponse.json({ message: "Deleted" });
+    for (const file of files) {
+      if (file.endsWith(".md")) {
+        const id = file.replace(".md", "");
+        const filePath = path.join(infoDir, file);
+        const content = await fs.readFile(filePath, "utf8");
+        const { data } = matter(content);
+
+        posts.push({
+          id,
+          title: data.title,
+          createdAt: data.createdAt,
+          coverUrl: data.coverUrl,
+          tags: Array.isArray(data.tags) ? data.tags : [data.tags],
+        });
+      }
+    }
+
+    posts.sort((a, b) => {
+      return (
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+    });
+
+    return NextResponse.json(posts);
+  } catch (error) {
+    console.error(error);
+    return new NextResponse("Failed to load posts", { status: 500 });
+  }
 }

@@ -1,21 +1,56 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { hardcodedPosts } from "@/lib/infoData";
+import { useEffect, useState } from "react";
+
+interface InfoPost {
+  id: string;
+  title: string;
+  createdAt: string;
+  coverUrl?: string;
+  tags?: string[];
+}
 
 export default function InfoPage() {
+  const [posts, setPosts] = useState<InfoPost[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const searchParams = useSearchParams();
+  const router = useRouter();
   const filterTag = searchParams.get("tag");
 
-  const filtered = filterTag
-    ? hardcodedPosts.filter((p) => p.tags?.includes(filterTag))
-    : hardcodedPosts;
+  useEffect(() => {
+    async function loadPosts() {
+      const res = await fetch("/api/info");
+      const data = await res.json();
+      setPosts(data);
+    }
+    loadPosts();
+  }, []);
+
+  const allTags = Array.from(new Set(posts.flatMap((p) => p.tags ?? [])));
+
+  const filtered = posts.filter((p) => {
+    const matchesTag = filterTag ? p.tags?.includes(filterTag) : true;
+    const matchesSearch = searchQuery
+      ? p.title.includes(searchQuery) ||
+        p.tags?.some((tag) => tag.includes(searchQuery))
+      : true;
+    return matchesTag && matchesSearch;
+  });
+
+  const handleTagClick = (tag: string) => {
+    router.push(`/info?tag=${encodeURIComponent(tag)}`);
+  };
+
+  const handleClearTag = () => {
+    router.push(`/info`);
+  };
 
   return (
     <main className="relative min-h-screen text-white font-sans">
-      {/* 背景圖 */}
+      {/* 背景 */}
       <div className="absolute inset-0 z-[-2]">
         <img
           src="/coronation-bg.png"
@@ -25,14 +60,55 @@ export default function InfoPage() {
       </div>
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm z-[-1]" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-8 pt-28 pb-20 space-y-10">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] text-center drop-shadow-[0_1px_0_rgba(0,0,0,0.9)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.6)]">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-8 pt-28 pb-20 space-y-10">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] text-center drop-shadow">
           最新公告
         </h1>
 
+        {/* 搜尋欄 */}
+        <div className="flex flex-col md:flex-row items-center gap-4 mt-8">
+          <input
+            type="text"
+            placeholder="搜尋公告..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full md:w-1/2 p-3 rounded-lg border border-gray-600 bg-black/50 text-white placeholder-gray-400 focus:outline-none"
+          />
+        </div>
+
+        {/* 標籤 */}
+        {allTags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-4">
+            <button
+              onClick={handleClearTag}
+              className={`px-3 py-1 rounded-full text-sm ${
+                filterTag
+                  ? "bg-gray-700 text-gray-200"
+                  : "bg-[#F28C7C] text-black font-bold"
+              }`}
+            >
+              全部
+            </button>
+            {allTags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => handleTagClick(tag)}
+                className={`px-3 py-1 rounded-full text-sm ${
+                  filterTag === tag
+                    ? "bg-[#F28C7C] text-black font-bold"
+                    : "bg-gray-700 text-gray-200"
+                }`}
+              >
+                #{tag}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* 列表 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {filtered.map((post, index) => (
-            <Link key={post._id} href={`/info/${post._id}`} className="group">
+            <Link key={post.id} href={`/info/${post.id}`} className="group">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -50,9 +126,6 @@ export default function InfoPage() {
                     <h2 className="text-xl font-bold text-white group-hover:text-[#F28C7C] mb-2 transition-colors duration-200">
                       {post.title}
                     </h2>
-                    <p className="text-sm text-gray-300 line-clamp-3">
-                      {post.content}
-                    </p>
                   </div>
                   <div className="mt-4 flex justify-between items-center text-xs text-gray-400">
                     <span>
@@ -74,6 +147,10 @@ export default function InfoPage() {
             </Link>
           ))}
         </div>
+
+        {filtered.length === 0 && (
+          <p className="text-center text-gray-400">沒有符合條件的公告。</p>
+        )}
       </div>
     </main>
   );
