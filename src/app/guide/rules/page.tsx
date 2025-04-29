@@ -463,7 +463,7 @@ export default function RulesPage() {
         </h1>
 
         {/* Section: 遊戲目標 */}
-        <section className="mb-20">
+        <section className="border-b border-[#444]/40 pb-12 mb-12 last:border-0">
           <h2 className="text-3xl font-bold text-[#F28C7C] mb-4">遊戲目標</h2>
           <p>
             在 Grand Archive
@@ -504,7 +504,7 @@ export default function RulesPage() {
           />
         </section>
 
-        <section className="mb-12">
+        <section className="border-b border-[#444]/40 pb-12 mb-12 last:border-0">
           <h2 className="text-3xl font-bold text-[#F28C7C] mb-4">套牌構成</h2>
           <p className="text-base text-white mt-2 mb-8">
             每位玩家會有兩副牌組，一副是物質牌組（Material
@@ -551,7 +551,7 @@ export default function RulesPage() {
           />
         </section>
 
-        <section className="mb-12">
+        <section className="border-b border-[#444]/40 pb-12 mb-12 last:border-0">
           <h2 className="text-3xl font-bold text-[#F28C7C] mb-4">遊戲開始</h2>
           <ol className="list-decimal list-inside space-y-1">
             <li>擲骰決定先後</li>
@@ -587,7 +587,7 @@ export default function RulesPage() {
           </div>
         </section>
 
-        <section className="mb-12">
+        <section className="border-b border-[#444]/40 pb-12 mb-12 last:border-0">
           <h2 className="text-3xl font-bold text-[#F28C7C] mb-4">元素系統</h2>
           <ul className="list-disc list-inside">
             <li>每張牌右上角會有元素符號</li>
@@ -659,7 +659,7 @@ export default function RulesPage() {
           />
         </section>
 
-        <section className="mb-12">
+        <section className="border-b border-[#444]/40 pb-12 mb-12 last:border-0">
           {/* 🟦 Ally 卡片段落：左右排版（圖左文右） */}
           <div className="flex flex-col md:flex-row md:items-start md:gap-4 mb-10">
             {/* 圖片放左邊 */}
@@ -806,7 +806,7 @@ export default function RulesPage() {
           </div>
         </section>
 
-        <section className="mb-12">
+        <section className="border-b border-[#444]/40 pb-12 mb-12 last:border-0">
           <h2 className="text-3xl font-bold text-[#F28C7C] mb-4">
             回合流程（共七個階段）
           </h2>
@@ -845,7 +845,7 @@ export default function RulesPage() {
           </ol>
         </section>
 
-        <section className="mb-12">
+        <section className="border-b border-[#444]/40 pb-12 mb-12 last:border-0">
           <h2 className="text-3xl font-bold text-[#F28C7C] mt-8 mb-4">
             支付記憶費用（從物質牌組出牌）
           </h2>
@@ -874,7 +874,7 @@ export default function RulesPage() {
           />
         </section>
 
-        <section className="mb-12">
+        <section className="border-b border-[#444]/40 pb-12 mb-12 last:border-0">
           <h2 className="text-3xl font-bold text-[#F28C7C] mb-4">升級英雄</h2>
           <ul className="list-disc list-inside">
             <li>從等級低一階的英雄升級（如從 1 級升 2 級）</li>
