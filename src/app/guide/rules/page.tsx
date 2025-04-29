@@ -600,7 +600,7 @@ export default function RulesPage() {
               Wind，這時候就解鎖兩個元素：風、普通。
             </p>
             <p className="text-base text-[#fff9c4] mt-2 mb-8">
-            ※ 等升到 1 等，普通元素的Lorraine，仍然可以使用這兩個屬性的牌
+            ※ 升到 1 等普通元素的Lorraine，仍然可以使用這兩個屬性的牌
             </p>
           </ul>
           <div className="mt-6 flex justify-center gap-6 flex-wrap mb-8">
@@ -678,14 +678,15 @@ export default function RulesPage() {
               <h3 className="text-xl font-semibold">友軍（Ally）</h3>
               <ul className="list-disc list-inside mt-2 mb-2">
                 <li>打出後置於主戰場，有攻擊力與生命值</li>
-                <li>可以攻擊，攻擊後會橫置（休息）</li>
+                <li>可以攻擊，代價為橫置（休息）</li>
+                <li>每回合移除身上的傷害指示物（血量重置）</li>
               </ul>
 
-              <p className="font-semibold mt-4">使用條件：</p>
+              <p className="font-semibold mt-4">攻擊條件：</p>
               <ul className="list-disc list-inside ml-4">
-                <li>是你的主要階段</li>
+                <li>是你的主要階段（慢速slow）</li>
                 <li>堆疊上無其他效果</li>
-                <li>單位是清醒狀態</li>
+                <li>單位是醒來狀態</li>
                 <li>有有效攻擊目標（對手的單位）</li>
               </ul>
             </div>
@@ -715,10 +716,10 @@ export default function RulesPage() {
             <div className="flex-1">
               <h3 className="text-xl font-semibold mt-4">攻擊牌（Attack）</h3>
               <ul className="list-disc list-inside mt-2">
-                <li>讓你的英雄發動攻擊</li>
-                <li>傷害數值等同於牌右下角的力量屬性</li>
-                <li>額外條件：英雄需橫置</li>
-                <li>解決後的攻擊牌會在該戰鬥階段結束時送入墓地</li>
+                <li>讓你的英雄發動攻擊（皆為慢速slow）</li>
+                <li>傷害數值等同於右下角的力量屬性</li>
+                <li>額外條件：橫置英雄</li>
+                <li>結算後的攻擊牌會在該戰鬥階段結束時送入墓地</li>
               </ul>
             </div>
           </div>
@@ -744,13 +745,14 @@ export default function RulesPage() {
             <div className="flex-1">
               <h3 className="text-xl font-semibold mt-4">武器（Weapon）</h3>
               <ul className="list-disc list-inside mt-2">
-                <li>給英雄裝備使用，具有力量與耐久</li>
+                <li>給英雄使用，具有力量與耐久</li>
+                <li>場上沒有武器數量限制</li>
                 <li>攻擊時消耗 1 耐久</li>
-                <li>耐久歸 0 時武器會被犧牲</li>
+                <li>耐久歸 0 時武器會被犧牲，進除外區</li>
+                <p className="text-base text-[#fff9c4] mt-2">
+                ※ 可以與攻擊牌一同使用，攻擊力會疊加
+                </p>
               </ul>
-              <p className="text-base text-white mt-2">
-                補充：可以與攻擊牌一同使用，攻擊力會疊加
-              </p>
             </div>
           </div>
 
@@ -768,11 +770,12 @@ export default function RulesPage() {
             </div>
             <div className="flex-1">
               <h3 className="text-xl font-semibold mt-4">
-                行動牌（Action）：快速
+                行動牌（Action）：快速 Fast
               </h3>
               <ul className="list-disc list-inside mt-2">
                 <li>單次使用的效果牌，用完即送入墓地</li>
                 <li>快速牌可以在任意時間打出，包括對手的回合</li>
+                <li>可進行堆疊</li>
               </ul>
               <p className="text-sm text-gray-300 mt-2">
                 範例：<strong>Fireball</strong> 可在任何時機對單位造成傷害。
@@ -793,14 +796,14 @@ export default function RulesPage() {
             </div>
             <div className="flex-1">
               <h3 className="text-xl font-semibold mt-4">
-                行動牌（Action）：慢速
+                行動牌（Action）：慢速 Slow
               </h3>
               <ul className="list-disc list-inside mt-2">
                 <li>單次使用的效果牌，用完即送入墓地</li>
                 <li>慢速牌只能在你的主要階段使用，且堆疊為空時才可使用</li>
               </ul>
               <p className="text-sm text-gray-300 mt-2">
-                範例：<strong>Scry the Skies</strong> 可以讓你預見並調整牌庫頂端。
+                範例：<strong>Scry the Skies</strong> 可以讓你預視並調整牌庫頂端。
               </p>
             </div>
           </div>
@@ -812,12 +815,12 @@ export default function RulesPage() {
           </h2>
           <ol className="list-decimal list-inside space-y-1">
             <li>
-              <strong>喚醒階段</strong>：直立你控制的單位
+              <strong>喚醒階段</strong>：直立你控制的所有物件（英雄、友軍、物品...）
             </li>
 
             <li>
-              <strong>物化階段</strong>
-              ：從物質牌組中實現一張牌（需支付記憶費用）
+              <strong>物質化階段</strong>
+              ：從物質牌組中物質化一張牌（需支付記憶費用）
             </li>
             <Image
               src="/guide/Deciding_to_Materialize.gif"
@@ -828,7 +831,7 @@ export default function RulesPage() {
             />
 
             <li>
-              <strong>回憶階段</strong>：將記憶區的牌全部收回手牌
+              <strong>回憶階段</strong>：將記憶區的牌全部收回手
             </li>
             <li>
               <strong>抽牌階段</strong>：抽 1 張牌
@@ -859,7 +862,7 @@ export default function RulesPage() {
 
           <p>物質牌組牌的左上角為藍色記憶費用（Memory Cost），支付方式如下：</p>
           <ol className="list-decimal list-inside space-y-1">
-            <li>宣告要實現的牌</li>
+            <li>宣告要物質化的牌</li>
             <li>隨機除外記憶區中等量的牌作為費用 → 可用骰子或讓對手隨機選擇</li>
           </ol>
           <p className="text-base text-[#fff9c4] mt-2 mb-8">
@@ -883,10 +886,10 @@ export default function RulesPage() {
               必須從一階 Lorraine 升上去
             </li>
             <li>支付記憶費用</li>
+            <p className="text-base text-[#fff9c4] mt-2">
+                ※ 升級後英雄保有其血統元素，你可以打出所有符合其啟用元素的牌（前提是符合各自牌片條件）
+            </p>
           </ul>
-          <p className="mt-2">
-            升級後英雄保有其血統元素，你可以打出所有符合其啟用元素的牌（前提是符合各自牌片條件）
-          </p>
         </section>
 
         <section className="mb-12">
@@ -902,7 +905,7 @@ export default function RulesPage() {
             </li>
             <li>
               <strong>職業獎勵（Class Bonus）</strong>
-              ：當你的英雄職業與牌片對應時，才會觸發額外效果
+              ：當你的英雄職業與卡牌對應時，才會觸發該效果
             </li>
           </ul>
         </section>
