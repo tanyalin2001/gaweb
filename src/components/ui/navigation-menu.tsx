@@ -25,7 +25,7 @@ export default function HomePage() {
             className="flex items-center gap-2 text-[#F28C7C] text-2xl font-black tracking-wide hover:opacity-90"
           >
             <Flame className="w-6 h-6 -mt-0.5" />
-            SparkGA
+            SparkleGA
           </Link>
 
           {/* Center - Nav links */}

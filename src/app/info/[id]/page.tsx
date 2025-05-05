@@ -42,7 +42,11 @@ export async function generateStaticParams() {
     }));
 }
 
-export default async function InfoDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function InfoDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const filePath = path.join(process.cwd(), "src/content/info", `${id}.md`);
 
@@ -98,7 +102,7 @@ export default async function InfoDetailPage({ params }: { params: Promise<{ id:
                 <img
                   {...props}
                   className="h-[330px] w-auto object-contain rounded-xl shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
-                  alt={props.alt || ''}
+                  alt={props.alt || ""}
                 />
               ),
               ul: ({ node, ...props }) => (
@@ -120,14 +124,18 @@ export default async function InfoDetailPage({ params }: { params: Promise<{ id:
                       typeof child === "object" &&
                       child !== null &&
                       "type" in child &&
-                      child.type === "img"
+                      child.type === "img",
                   );
 
                 if (isImageOnlyParagraph) {
                   return <>{children}</>;
                 }
 
-                return <p className="leading-relaxed" {...props}>{children}</p>;
+                return (
+                  <p className="leading-relaxed" {...props}>
+                    {children}
+                  </p>
+                );
               },
               div: ({ node, className, ...props }) => {
                 if (className === "cards") {
@@ -141,9 +149,7 @@ export default async function InfoDetailPage({ params }: { params: Promise<{ id:
                   );
                 }
                 return <div className={className} {...props} />;
-              }
-              
-              
+              },
             }}
           >
             {content}

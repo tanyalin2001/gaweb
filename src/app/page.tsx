@@ -117,7 +117,7 @@ export default function HomePage() {
           />
           <div className="space-y-6">
             <h2 className="text-4xl font-bold text-[#F28C7C] drop-shadow">
-              關於 SparkGA
+              關於 SparkleGA
             </h2>
             <p className="text-gray-100 text-lg leading-relaxed drop-shadow-sm">
               由玩家打造，為玩家服務 — SparkGA 是 Grand Archive

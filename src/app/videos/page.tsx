@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,76 +13,42 @@ interface Video {
   youtubeUrl: string;
 }
 
-const playlists: { title: string; videos: Video[] }[] = [
-  {
-    title: "🎓 新手導向",
-    videos: [
-      {
-        id: "v2",
-        title: "入坑懶人包！入坑萬用牌、基礎元素特性與五大流派簡介",
-        thumbnail: "/videos/beginner-guide.png",
-        tag: "新手教學",
-        youtubeUrl: "https://youtu.be/yFTRUU1ki_4?si=4BB29zKKc9N839QV",
-      },
-      {
-        id: "v5",
-        title: "Grand Archive 是什麼？三分鐘快速了解",
-        thumbnail: "/videos/beginner-guide2.png",
-        tag: "新手教學",
-        youtubeUrl: "https://youtube.com/watch?v=xxx2",
-      },
-      {
-        id: "v6",
-        title: "Grand Archive 是什麼？三分鐘快速了解",
-        thumbnail: "/videos/beginner-recommendation.png",
-        tag: "新手教學",
-        youtubeUrl: "https://youtube.com/watch?v=xxx2",
-      },
-    ],
-  },
-  {
-    title: "📹 Vlog 系列",
-    videos: [
-      {
-        id: "v1",
-        title: "開箱一箱 GB01！我們抽到了 SSR！",
-        thumbnail: "/videos/box-opening.jpg",
-        tag: "開箱",
-        youtubeUrl: "https://youtube.com/watch?v=xxx1",
-      },
-    ],
-  },
-  {
-    title: "🃏 牌組介紹",
-    videos: [
-      {
-        id: "v4",
-        title: "風札德控制詳細解析！",
-        thumbnail: "/videos/deck-wind.jpg",
-        tag: "牌組解析",
-        youtubeUrl: "https://youtube.com/watch?v=xxx4",
-      },
-    ],
-  },
-  {
-    title: "📊 環境介紹",
-    videos: [
-      {
-        id: "v3",
-        title: "Seattle 大賽精華！你錯過的精彩瞬間",
-        thumbnail: "/videos/seattle.jpg",
-        tag: "大賽報導",
-        youtubeUrl: "https://youtube.com/watch?v=xxx3",
-      },
-    ],
-  },
-];
+interface PlaylistSection {
+  title: string;
+  videos: Video[];
+}
 
 export default function VideosPage() {
+  const [playlists, setPlaylists] = useState<PlaylistSection[]>([]);
+  const [activeTab, setActiveTab] = useState<string>("");
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const res = await fetch("/api/youtube", { cache: "no-store" });
+        if (!res.ok) throw new Error("API error");
+
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error("Invalid API response");
+
+        setPlaylists(data);
+        if (data.length > 0) setActiveTab(data[0].title); // 預設選擇第一個 tab
+      } catch (err) {
+        console.error("載入失敗", err);
+        setPlaylists([]);
+      }
+    };
+    fetchVideos();
+  }, []);
+
+  const activeSection = playlists.find(
+    (section) => section.title === activeTab,
+  );
+
   return (
     <main className="relative min-h-screen text-white font-sans">
       {/* 背景圖層 */}
-      <div className="fixed  inset-0 z-[-2]">
+      <div className="fixed inset-0 z-[-2]">
         <Image
           src="/diaochan-bg.png"
           alt="Guide Background"
@@ -91,52 +58,71 @@ export default function VideosPage() {
       </div>
       <div className="absolute inset-0 bg-black/80 backdrop-blur-md z-[-1]" />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-8 pt-28 pb-20 space-y-10">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-4 md:px-8 pt-28 pb-20 space-y-10">
         <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] text-center drop-shadow-[0_1px_0_rgba(0,0,0,0.9)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.6)]">
           推薦影片
         </h1>
-        {playlists.map((section, sectionIndex) => (
-          <div key={sectionIndex} className="mb-16">
-            <h2 className="text-2xl font-bold text-[#F28C7C] mb-6">
+
+        {/* Tab 導覽列 */}
+        <div className="flex flex-wrap justify-center gap-3 md:gap-4 border-b border-white/20 pb-6">
+          {playlists.map((section) => (
+            <button
+              key={section.title}
+              onClick={() => setActiveTab(section.title)}
+              className={`px-4 py-2 rounded-full font-semibold transition-all duration-200 text-sm md:text-base
+        ${
+          activeTab === section.title
+            ? "bg-white text-black shadow-md"
+            : "bg-white/10 text-white hover:bg-white/20"
+        }`}
+            >
               {section.title}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {section.videos.map((video, i) => (
-                <motion.div
-                  key={video.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="bg-[#1a1a1a]/90 rounded-xl shadow-md border border-[#F28C7C]/20 overflow-hidden"
-                >
+            </button>
+          ))}
+        </div>
+
+        {/* 選中 tab 的影片清單 */}
+        {activeSection && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-6">
+            {activeSection.videos.map((video, i) => (
+              <motion.div
+                key={video.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className="bg-[#1e1e1e] rounded-2xl shadow-lg overflow-hidden flex flex-col hover:scale-[1.02] transition-transform duration-300"
+              >
+                <div className="w-full aspect-[16/9] relative">
                   <Image
                     src={video.thumbnail}
                     alt={video.title}
-                    width={400}
-                    height={200}
-                    className="w-full h-[200px] object-cover"
+                    fill
+                    className="rounded-t-2xl object-cover"
                   />
-                  <div className="p-4">
-                    <span className="text-xs bg-[#F28C7C]/10 text-[#F28C7C] px-2 py-1 rounded inline-block mb-2">
+                </div>
+
+                <div className="flex flex-col justify-between p-4 flex-1">
+                  <div className="space-y-2">
+                    <span className="text-xs inline-block px-2 py-[2px] rounded-full bg-[#F28C7C]/20 text-[#F28C7C] font-medium">
                       {video.tag}
                     </span>
-                    <h3 className="text-lg font-semibold mb-3 text-white">
+                    <h3 className="text-base font-semibold text-white leading-snug line-clamp-2">
                       {video.title}
                     </h3>
-                    <Link
-                      href={video.youtubeUrl}
-                      target="_blank"
-                      className="inline-block bg-[#F28C7C] text-black px-4 py-2 rounded hover:bg-[#e0474d] transition"
-                    >
-                      ▶️ 觀看影片
-                    </Link>
                   </div>
-                </motion.div>
-              ))}
-            </div>
+                  <Link
+                    href={video.youtubeUrl}
+                    target="_blank"
+                    className="mt-4 w-full inline-block text-center font-semibold text-sm bg-[#F28C7C] text-black py-2 rounded-lg hover:bg-[#e04646] transition"
+                  >
+                    ▶ 觀看影片
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
           </div>
-        ))}
+        )}
       </div>
     </main>
   );

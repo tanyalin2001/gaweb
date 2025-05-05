@@ -6,7 +6,6 @@ import matter from "gray-matter";
 export async function GET() {
   const infoDir = path.join(process.cwd(), "src", "content", "info");
 
-
   try {
     const files = await fs.readdir(infoDir);
     const posts = [];
@@ -29,9 +28,7 @@ export async function GET() {
     }
 
     posts.sort((a, b) => {
-      return (
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
 
     return NextResponse.json(posts);

@@ -600,7 +600,7 @@ export default function RulesPage() {
               Wind，這時候就解鎖兩個元素：風、普通。
             </p>
             <p className="text-base text-[#fff9c4] mt-2 mb-8">
-            ※ 升到 1 等普通元素的Lorraine，仍然可以使用這兩個屬性的牌
+              ※ 升到 1 等普通元素的Lorraine，仍然可以使用這兩個屬性的牌
             </p>
           </ul>
           <div className="mt-6 flex justify-center gap-6 flex-wrap mb-8">
@@ -750,7 +750,7 @@ export default function RulesPage() {
                 <li>攻擊時消耗 1 耐久</li>
                 <li>耐久歸 0 時武器會被犧牲，進除外區</li>
                 <p className="text-base text-[#fff9c4] mt-2">
-                ※ 可以與攻擊牌一同使用，攻擊力會疊加
+                  ※ 可以與攻擊牌一同使用，攻擊力會疊加
                 </p>
               </ul>
             </div>
@@ -803,7 +803,8 @@ export default function RulesPage() {
                 <li>慢速牌只能在你的主要階段使用，且堆疊為空時才可使用</li>
               </ul>
               <p className="text-sm text-gray-300 mt-2">
-                範例：<strong>Scry the Skies</strong> 可以讓你預視並調整牌庫頂端。
+                範例：<strong>Scry the Skies</strong>{" "}
+                可以讓你預視並調整牌庫頂端。
               </p>
             </div>
           </div>
@@ -815,7 +816,8 @@ export default function RulesPage() {
           </h2>
           <ol className="list-decimal list-inside space-y-1">
             <li>
-              <strong>喚醒階段</strong>：直立你控制的所有物件（英雄、友軍、物品...）
+              <strong>喚醒階段</strong>
+              ：直立你控制的所有物件（英雄、友軍、物品...）
             </li>
 
             <li>
@@ -887,7 +889,8 @@ export default function RulesPage() {
             </li>
             <li>支付記憶費用</li>
             <p className="text-base text-[#fff9c4] mt-2">
-                ※ 升級後英雄保有其血統元素，你可以打出所有符合其啟用元素的牌（前提是符合各自牌片條件）
+              ※
+              升級後英雄保有其血統元素，你可以打出所有符合其啟用元素的牌（前提是符合各自牌片條件）
             </p>
           </ul>
         </section>
