@@ -1,16 +1,15 @@
 "use client";
 
-import GuideLayout from "../layout";
+import GridLayout from "../layout";
 import Image from "next/image";
 
 export default function RulesPage() {
   return (
-    <GuideLayout>
-      <div className="bg-[#1a1a1a]/80 rounded-2xl p-6 md:p-10 shadow-lg border border-[#333]">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] text-center drop-shadow-[0_1px_0_rgba(0,0,0,0.9)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.6)] mb-10">
+    <GridLayout>
+      <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] text-center drop-shadow-[0_1px_0_rgba(0,0,0,0.9)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.6)] mb-10">
           新手入門指南
-        </h1>
-
+      </h1>
+      <div className="bg-[#1a1a1a]/80 rounded-2xl p-6 md:p-10 shadow-lg border border-[#333]">
         {/* Section: 遊戲目標 */}
         <section className="border-b border-[#444]/40 pb-12 mb-12 last:border-0">
           <h2 className="text-3xl font-bold text-[#F28C7C] mb-4">遊戲目標</h2>
@@ -462,6 +461,6 @@ export default function RulesPage() {
           </ul>
         </section>
       </div>
-    </GuideLayout>
+    </GridLayout>
   );
 }
