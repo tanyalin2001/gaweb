@@ -74,7 +74,7 @@ export default function FeaturedPage() {
       <div className="absolute inset-0 bg-black/80 backdrop-blur-md z-[-1]" />
       <div className="relative z-10 max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-[#F28C7C] mb-6 text-center">
-          ✨ 精選牌組
+          精選牌組
         </h1>
         <p className="text-gray-300 text-center max-w-2xl mx-auto mb-10 text-sm md:text-base">
           {intro}

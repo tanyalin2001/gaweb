@@ -2,18 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useAuth } from "@/hooks/useAuth";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Flame } from "lucide-react";
 
 export default function HomePage() {
-  const { username, role, logout, isLoggedIn } = useAuth();
   const [open, setOpen] = useState(false);
-
-  const handleLogout = () => {
-    logout();
-    setOpen(false);
-  };
 
   return (
     <main className="text-white font-sans">
@@ -65,50 +58,9 @@ export default function HomePage() {
             <Link href="/videos" className="hover:text-[#F28C7C] transition">
               推薦影片
             </Link>
-            {!isLoggedIn ? (
-              <>
-                <Link
-                  href="/login"
-                  className="px-4 py-1.5 border border-[#F28C7C] rounded-full text-[#F28C7C] hover:bg-[#F28C7C] hover:text-black transition"
-                >
-                  登入
-                </Link>
-                <Link
-                  href="/register"
-                  className="px-4 py-1.5 border border-[#F28C7C] rounded-full text-[#F28C7C] hover:bg-[#F28C7C] hover:text-black transition"
-                >
-                  註冊
-                </Link>
-              </>
-            ) : (
-              <div className="relative group">
-                <button className="font-semibold text-white">
-                  嗨，{username} 👤
-                </button>
-                <div className="absolute top-12 right-0 w-44 bg-[#111]/95 border border-[#F28C7C] shadow-xl rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 z-50 backdrop-blur">
-                  <Link
-                    href="/settings"
-                    className="block px-4 py-2 text-sm hover:bg-[#F28C7C] hover:text-black"
-                  >
-                    帳號設定
-                  </Link>
-                  {role === "admin" && (
-                    <Link
-                      href="/admin"
-                      className="block px-4 py-2 text-sm hover:bg-[#F28C7C] hover:text-black"
-                    >
-                      後台管理
-                    </Link>
-                  )}
-                  <button
-                    onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-[#F28C7C] hover:text-black"
-                  >
-                    登出
-                  </button>
-                </div>
-              </div>
-            )}
+            <Link href="/tools" className="hover:text-[#F28C7C] transition">
+              實用網站
+            </Link>
           </nav>
 
           {/* Right - Mobile Toggle */}
@@ -165,36 +117,13 @@ export default function HomePage() {
                   >
                     推薦影片
                   </Link>
-                  {!isLoggedIn ? (
-                    <>
-                      <Link
-                        href="/login"
-                        onClick={() => setOpen(false)}
-                        className="text-[#F28C7C]"
-                      >
-                        登入
-                      </Link>
-                      <Link
-                        href="/register"
-                        onClick={() => setOpen(false)}
-                        className="text-[#F28C7C]"
-                      >
-                        註冊
-                      </Link>
-                    </>
-                  ) : (
-                    <>
-                      <Link href="/settings" onClick={() => setOpen(false)}>
-                        帳號設定
-                      </Link>
-                      {role === "admin" && (
-                        <Link href="/admin" onClick={() => setOpen(false)}>
-                          後台管理
-                        </Link>
-                      )}
-                      <button onClick={handleLogout}>登出</button>
-                    </>
-                  )}
+                  <Link
+                    href="/tools"
+                    onClick={() => setOpen(false)}
+                    className="hover:text-[#F28C7C]"
+                  >
+                    實用網站
+                  </Link>
                 </div>
               </SheetContent>
             </Sheet>
