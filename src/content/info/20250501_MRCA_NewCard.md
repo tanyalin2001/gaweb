@@ -3,7 +3,6 @@ title: "MRC Alter 新卡消息"
 createdAt: "2025-04-28T00:00:00Z"
 coverUrl: "/info/cover/MRC_Alter.jpg"
 tags:
-  - 公告
   - 新消息
 ---
 
