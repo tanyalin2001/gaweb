@@ -3,7 +3,6 @@ title: "飛博 Cosplay 大賽"
 createdAt: "2025-04-28T16:22:00Z"
 coverUrl: "/info/cover/CosplayContest.jpg"
 tags:
-  - 公告
   - 活動
 ---
 
