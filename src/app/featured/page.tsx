@@ -98,7 +98,7 @@ export default function FeaturedPage() {
                   {deck.title}
                 </h2>
                 <p className="text-gray-300 text-sm mt-2">
-                  {deck.description}
+                  {deck.intro}
                 </p>
               </div>
             </Link>

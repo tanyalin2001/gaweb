@@ -2,38 +2,20 @@
   "intro": "歡迎來到我們的精選卡表區！",
   "decks": [
     {
-      "id": "arisanna-zenith",
-      "cover": "https://api.gatcg.com/cards/edition/arisanna-astral-zenith-alc",
-      "title": "Arisanna Wind Combo",
+      "id": "fire-prismatic-lorraine",
+      "cover": "https://api.gatcg.com/cards/spirit-blade-infusion",
+      "title": "Fire Prismatic Crux Lorraine",
       "type": "eventdecklist",
-      "eventid": 23852,
-      "playerid": 520,
-      "eventname": "Seattle HVN Regionals",
-      "playerName": "Alice",
+      "eventid": 24206,
+      "playerid": 363,
+      "eventname": "CakeTCG HVN Online Regional",
+      "playerName": "Jimmyle",
       "country": "US",
-      "deckName": "Wind Arisanna",
-      "record": "6-1",
-      "intro": "This is arisanna!",
-      "description": "典型的combo控制型牌組。",
-      "strategy": "靠Cometfall與Polaris循環控制場面，快速穩定設置場地。"
-    },
-    {
-      "id": "fun-deck1",
-      "cover": "https://api.gatcg.com/cards/edition/shadowstrike-rec-shd",
-      "title": "Fun Tristan",
-      "type": "fundeck",
-      "playerName": "Tanya",
-      "country": "TW",
-      "deckName": "Cute Tristan",
-      "record": "N/A",
-      "intro": "這是Tristan的可愛卡表！",
-      "description": "非賽場使用的可愛卡表！",
-      "strategy": "用Tristan打人，很可愛。",
-      "deck": {
-        "main": [{ "card": "Tristan's Resolve", "quantity": 4 }],
-        "material": [],
-        "sideboard": []
-      }
+      "deckName": "Fire Prismatic Crux Lorraine",
+      "date": "2025-05-03",
+      "record": "4-1-1",
+      "intro": "Clarent 出來之後，火系 Lorraine 終於噌噌噌地冒出來了！今天要介紹的，是 Jimmyle 的一副非常有趣的火戰士牌組。",
+      "description": "這副牌前期可以暴力速攻，快速斬殺對手；就算進入後期，還能靠 Crux 系列的 Spirit Blade: Ascension 帶出 Prismatic Edge 造成傷害、丟手牌等壓制手段。等級升到三等後，還能使用 Devastating Blow，三費打 7，威力驚人。這副牌的三等 Combo 也很類似傳統梅林布陣：用 Ghost of Pendragon 把 Prismatic Edge 回收進物質區，再用 Spirit Blade: Ascension 召喚他出來。梅林靠等級強化火球傷害，Lorraine 則是用 Rending Flames、Devastating Blow、Savage Slash 這些攻擊牌，加上像 Spirit Blade: Infusion、Hone By Fire 等攻守強化手段，再搭配不同武器來打出高爆發。無論是 Clarent（還能防止法術傷害）、Sword of Seeking，或是本身就有三攻的 Prismatic Edge，都能讓對手招架不住！"
     }
   ]
 }

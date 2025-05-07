@@ -20,6 +20,9 @@ interface FeaturedDeck {
   eventid?: number;
   playerid?: number;
   image?: string;
+  eventname?: string;
+  date?: string;
+  intro: string;
   description: string;
   strategy?: string;
   playerName: string;
@@ -37,21 +40,17 @@ function slugify(cardName: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-export default async function FeaturedDeckPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const id = params.id;
+export default async function FeaturedDeckPage({ params }: { params: { id: string } }) {
+  const { id } = await Promise.resolve(params);
 
   interface FeaturedDecksWrapper {
     intro: string;
     decks: FeaturedDeck[];
   }
-  
+
   const data = rawData as FeaturedDecksWrapper;
   const decks = data.decks;
-  
+
   const deckEntry = decks.find((d) => d.id === id);
   if (!deckEntry) return notFound();
 
@@ -79,26 +78,42 @@ export default async function FeaturedDeckPage({
   if (!deck) return notFound();
 
   return (
-    <main className="relative min-h-screen text-white px-6 pt-28 pb-20">
+    <main className="relative min-h-screen text-white px-6 pt-28 pb-20 text-lg">
       <div className="fixed inset-0 z-[-2]">
         <Image src="/bg.png" alt="BG" fill className="object-cover" />
       </div>
       <div className="absolute inset-0 bg-black/80 backdrop-blur-md z-[-1]" />
       <div className="relative z-10 max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-[#F28C7C] mb-2">{deckEntry.title}</h1>
-        <p className="text-gray-300 mb-4">
-          玩家：{deckEntry.playerName}｜國家：{deckEntry.country}｜戰績：{deckEntry.record}
+        <h1 className="text-5xl font-bold text-[#F28C7C] mb-2">{deckEntry.title}</h1>
+        <p className="text-gray-300 mb-1">
+          玩家：{deckEntry.playerName}｜國家：{deckEntry.country}｜戰績：{deckEntry.record}｜日期：{deckEntry.date}
         </p>
+        {deckEntry.eventname && (
+          <p className="text-gray-400 mb-4">
+            賽事：{deckEntry.eventname}
+            {deckEntry.eventid && <>｜編號：{deckEntry.eventid}</>}
+          </p>
+        )}
+        {(deckEntry.intro || deckEntry.description) && (
+          <div className="mb-8 bg-black/60 p-4 rounded border border-[#F28C7C]/40">
+            <h2 className="text-2xl font-bold mb-2 text-[#F28C7C]">牌組介紹</h2>
+            <p className="text-gray-300 whitespace-pre-line">
+              {deckEntry.intro}
+              {"\n\n"}
+              {deckEntry.description}
+            </p>
+          </div>
+        )}
         {deckEntry.strategy && (
           <div className="mb-8 bg-black/60 p-4 rounded border border-[#F28C7C]/40">
-            <h2 className="text-xl font-bold mb-2 text-[#F28C7C]">📘 使用指南</h2>
-            <p className="text-gray-300 text-sm whitespace-pre-line">{deckEntry.strategy}</p>
+            <h2 className="text-2xl font-bold mb-2 text-[#F28C7C]">📘 使用指南</h2>
+            <p className="text-gray-300 whitespace-pre-line">{deckEntry.strategy}</p>
           </div>
         )}
         <div className="space-y-10">
-          {deck.material?.length ? renderCardGrid("Material Deck", deck.material, "material") : null}
-          {deck.main?.length ? renderCardGrid("Main Deck", deck.main, "main") : null}
-          {deck.sideboard?.length ? renderCardGrid("Sideboard", deck.sideboard, "sideboard") : null}
+          {deck.material?.length ? await renderCardGrid("Material Deck", deck.material, "material") : null}
+          {deck.main?.length ? await renderCardGrid("Main Deck", deck.main, "main") : null}
+          {deck.sideboard?.length ? await renderCardGrid("Sideboard", deck.sideboard, "sideboard") : null}
         </div>
       </div>
     </main>
@@ -106,7 +121,7 @@ export default async function FeaturedDeckPage({
 
   async function renderCardGrid(title: string, cards: CardEntry[], section: string) {
     const imageMap: Record<string, string> = {};
-  
+
     await Promise.all(
       cards.map(async (card) => {
         const slug = slugify(card.card);
@@ -123,10 +138,10 @@ export default async function FeaturedDeckPage({
         }
       })
     );
-  
+
     return (
       <div className="mb-8 bg-black/60 p-4 rounded border border-[#F28C7C]/40">
-        <h3 className="text-lg font-semibold text-white mb-2">{title} ({cards.length} cards)</h3>
+        <h3 className="text-xl font-semibold text-white mb-2">{title} ({cards.length} cards)</h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-3">
           {cards.map((card, i) => (
             <div key={`${section}-${i}`} className="text-center text-sm relative group">
@@ -139,14 +154,12 @@ export default async function FeaturedDeckPage({
                   className="rounded-lg border border-gray-700 mx-auto"
                 />
               </div>
-              <p className="text-white mt-1 font-medium text-xs">{card.card}</p>
-              <p className="text-gray-300 text-xs">x{card.quantity}</p>
+              <p className="text-white mt-1 font-medium text-sm">{card.card}</p>
+              <p className="text-gray-300 text-sm">x{card.quantity}</p>
             </div>
           ))}
         </div>
       </div>
     );
   }
-  
 }
-
