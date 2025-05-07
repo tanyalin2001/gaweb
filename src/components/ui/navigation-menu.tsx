@@ -59,8 +59,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            <Link href="/meta" className="hover:text-[#F28C7C] transition">
-              上位牌組
+            <Link href="/featured" className="hover:text-[#F28C7C] transition">
+              精選牌組
             </Link>
             <Link href="/videos" className="hover:text-[#F28C7C] transition">
               推薦影片

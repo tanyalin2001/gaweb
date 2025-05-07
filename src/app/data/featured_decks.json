@@ -1,0 +1,39 @@
+{
+  "intro": "歡迎來到我們的精選卡表區！",
+  "decks": [
+    {
+      "id": "arisanna-zenith",
+      "cover": "https://api.gatcg.com/cards/edition/arisanna-astral-zenith-alc",
+      "title": "Arisanna Wind Combo",
+      "type": "eventdecklist",
+      "eventid": 23852,
+      "playerid": 520,
+      "eventname": "Seattle HVN Regionals",
+      "playerName": "Alice",
+      "country": "US",
+      "deckName": "Wind Arisanna",
+      "record": "6-1",
+      "intro": "This is arisanna!",
+      "description": "典型的combo控制型牌組。",
+      "strategy": "靠Cometfall與Polaris循環控制場面，快速穩定設置場地。"
+    },
+    {
+      "id": "fun-deck1",
+      "cover": "https://api.gatcg.com/cards/edition/shadowstrike-rec-shd",
+      "title": "Fun Tristan",
+      "type": "fundeck",
+      "playerName": "Tanya",
+      "country": "TW",
+      "deckName": "Cute Tristan",
+      "record": "N/A",
+      "intro": "這是Tristan的可愛卡表！",
+      "description": "非賽場使用的可愛卡表！",
+      "strategy": "用Tristan打人，很可愛。",
+      "deck": {
+        "main": [{ "card": "Tristan's Resolve", "quantity": 4 }],
+        "material": [],
+        "sideboard": []
+      }
+    }
+  ]
+}

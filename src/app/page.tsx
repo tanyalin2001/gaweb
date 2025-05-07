@@ -187,7 +187,7 @@ export default function HomePage() {
         </p>
         <Link href="/register">
           <button className="bg-[#F28C7C] text-black font-bold px-8 py-3 rounded-full text-lg hover:bg-[#f6a999] transition">
-            加入 SparkGA
+            加入 SparkleGA
           </button>
         </Link>
       </section>

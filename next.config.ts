@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   images: {
-    domains: ["i.ytimg.com"],
+    domains: ["i.ytimg.com", "api.gatcg.com"],
   },
 };
 

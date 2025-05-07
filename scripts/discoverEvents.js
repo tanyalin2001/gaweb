@@ -1,73 +1,142 @@
-const fs = require("fs");
+import axios from "axios";
+import fs from "fs/promises";
 
-const BASE = "https://omni.gatcg.com/api";
-const headers = {
-  "User-Agent": "Mozilla/5.0",
-  Referer: "https://omni.gatcg.com/",
-  Origin: "https://omni.gatcg.com",
-};
+const BASE_URL = "https://omni.gatcg.com/api";
+const START_EVENT_ID = 20320;
+const END_EVENT_ID = 25000;
+const OUTPUT_FILE = "events_with_decklists_full.json";
 
-const output = [];
-const START = 18000;
-const END = 26000;
-const CONCURRENCY = 10;
-
-async function fetchEvent(id) {
-  console.log(`🔍 Checking event ${id}`);
-
+async function fetchEvent(eventId) {
   try {
-    const res = await fetch(`${BASE}/events/event?id=${id}`, { headers });
-    if (!res.ok) {
-      console.warn(`❌ Failed to fetch ${id}: ${res.status}`);
-      return null;
-    }
-
-    const data = await res.json();
-
-    if (
-      !data?.event_type?.includes("Premier") ||
-      (data.players?.length || 0) < 20
-    ) {
-      return null;
-    }
-
-    console.log(`✅ Found Premier Event: ${id} - ${data.title}`);
-
-    return {
-      id,
-      title: data.title,
-      date: data.date,
-      location: data.location || "",
-      players: data.players?.map((p) => p.id) || [],
-    };
+    const res = await axios.get(`${BASE_URL}/events/event?id=${eventId}`);
+    return res.data;
   } catch (err) {
-    console.warn(`⚠️  Error loading ${id}`, err.message);
+    console.warn(`❌ Failed to fetch event ${eventId}: ${err.message}`);
     return null;
   }
 }
 
-async function runBatch(ids) {
-  const results = await Promise.all(ids.map(fetchEvent));
-  for (const evt of results) {
-    if (evt) output.push(evt);
+async function fetchDecklist(eventId, playerId) {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/events/decklist?id=${eventId}&player=${playerId}`,
+    );
+    return res.data;
+  } catch (err) {
+    console.warn(`⚠️ No decklist for player ${playerId} in event ${eventId}`);
+    return null;
   }
 }
 
-(async () => {
-  const allIds = Array.from({ length: END - START + 1 }, (_, i) => START + i);
-
-  for (let i = 0; i < allIds.length; i += CONCURRENCY) {
-    const batch = allIds.slice(i, i + CONCURRENCY);
-    console.log(`🚀 Running batch: ${batch[0]} to ${batch[batch.length - 1]}`);
-    await runBatch(batch);
+function getSwissRecords(event) {
+  const records = {};
+  for (const player of event.players || []) {
+    records[player.id] = { W: 0, L: 0, D: 0, Bye: 0 };
   }
 
-  fs.writeFileSync(
-    "scripts/discoveredEvents.json",
-    JSON.stringify(output, null, 2)
-  );
+  const rounds = event?.stages?.[0]?.rounds || [];
+  for (const round of rounds) {
+    for (const match of round.matches || []) {
+      for (const pairing of match.pairing || []) {
+        const id = pairing.id;
+        const status = pairing.status;
+        if (!records[id]) continue;
+        if (status === "winner") records[id].W++;
+        else if (status === "loser") records[id].L++;
+        else if (status === "tied") records[id].D++;
+        else if (status === "byed") records[id].Bye++;
+      }
+    }
+  }
 
-  console.log(
-    "🎉 Done! Saved discovered Premier events to scripts/discoveredEvents.json"
-  );
-})();
+  const output = {};
+  for (const [id, r] of Object.entries(records)) {
+    let str = `${r.W}-${r.L}-${r.D}`;
+    if (r.Bye > 0) str += ` (+${r.Bye} BYE)`;
+    output[id] = str;
+  }
+
+  return output;
+}
+
+async function getCardImage(cardName) {
+  try {
+    const res = await axios.get(
+      `https://api.gatcg.com/cards/search?name=${encodeURIComponent(cardName)}`,
+    );
+    const card = res.data?.results?.[0];
+    const path = card?.editions?.[0]?.image;
+    if (path) return `https://api.gatcg.com${path}`;
+  } catch (err) {
+    console.warn(`⚠️ Image not found for ${cardName}`);
+  }
+  return null;
+}
+
+async function enrichDeckWithImages(deck) {
+  const addImages = async (cards = []) =>
+    await Promise.all(
+      cards.map(async ({ card, quantity }) => ({
+        card,
+        quantity,
+        image: await getCardImage(card),
+      })),
+    );
+
+  return {
+    main: await addImages(deck.main || []),
+    sideboard: await addImages(deck.sideboard || []),
+    material: await addImages(deck.material || []),
+  };
+}
+
+async function main() {
+  const results = [];
+
+  for (let id = START_EVENT_ID; id <= END_EVENT_ID; id++) {
+    const event = await fetchEvent(id);
+    if (!event || !event.decklists || !event._players || !event.players)
+      continue;
+
+    console.log(`✅ Event ${id} - ${event.name}`);
+
+    const swissMap = getSwissRecords(event);
+    const playerMap = Object.fromEntries(
+      event.players.map((p) => [
+        p.id,
+        { name: p.username, country: p.addressCountryCode },
+      ]),
+    );
+
+    const playerDecks = [];
+
+    for (const playerId of event._players) {
+      const deck = await fetchDecklist(id, playerId);
+      if (deck) {
+        const enrichedDeck = await enrichDeckWithImages(deck);
+        const player = playerMap[playerId] || {};
+        playerDecks.push({
+          playerId,
+          playerName: player.name || "Unknown",
+          country: player.country || "Unknown",
+          deckName: deck.name || "",
+          record: swissMap[playerId] || "",
+          deck: enrichedDeck,
+        });
+      }
+    }
+
+    results.push({
+      id,
+      name: event.name,
+      date: event.startAt,
+      playerCount: event._players.length,
+      decks: playerDecks,
+    });
+  }
+
+  await fs.writeFile(OUTPUT_FILE, JSON.stringify(results, null, 2));
+  console.log(`✅ All done! Output saved to ${OUTPUT_FILE}`);
+}
+
+main();
