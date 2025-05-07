@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import HeroSection from "@/components/HeroSection";
 
 interface InfoPost {
   id: string;
@@ -49,109 +50,93 @@ export default function InfoPage() {
   };
 
   return (
-    <main className="relative min-h-screen text-white font-sans">
-      {/* 背景 */}
-      <div className="absolute inset-0 z-[-2]">
-        <img
-          src="/coronation-bg.png"
-          alt="background"
-          className="w-full h-full object-cover"
+    <HeroSection title="最新公告" image="/coronation-bg.png">
+      {/* 搜尋欄 */}
+      <div className="flex flex-col md:flex-row items-center gap-4 mt-8">
+        <input
+          type="text"
+          placeholder="搜尋公告..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full md:w-1/2 p-3 rounded-lg border border-gray-600 bg-black/50 text-white placeholder-gray-400 focus:outline-none"
         />
       </div>
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm z-[-1]" />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-8 pt-28 pb-20 space-y-10">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] text-center drop-shadow">
-          最新公告
-        </h1>
-
-        {/* 搜尋欄 */}
-        <div className="flex flex-col md:flex-row items-center gap-4 mt-8">
-          <input
-            type="text"
-            placeholder="搜尋公告..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full md:w-1/2 p-3 rounded-lg border border-gray-600 bg-black/50 text-white placeholder-gray-400 focus:outline-none"
-          />
-        </div>
-
-        {/* 標籤 */}
-        {allTags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-4">
+      {/* 標籤 */}
+      {allTags.length > 0 && (
+        <div className="flex flex-wrap gap-2 mt-4">
+          <button
+            onClick={handleClearTag}
+            className={`px-3 py-1 rounded-full text-sm ${
+              filterTag
+                ? "bg-gray-700 text-gray-200"
+                : "bg-[#F28C7C] text-black font-bold"
+            }`}
+          >
+            全部
+          </button>
+          {allTags.map((tag) => (
             <button
-              onClick={handleClearTag}
+              key={tag}
+              onClick={() => handleTagClick(tag)}
               className={`px-3 py-1 rounded-full text-sm ${
-                filterTag
-                  ? "bg-gray-700 text-gray-200"
-                  : "bg-[#F28C7C] text-black font-bold"
+                filterTag === tag
+                  ? "bg-[#F28C7C] text-black font-bold"
+                  : "bg-gray-700 text-gray-200"
               }`}
             >
-              全部
+              #{tag}
             </button>
-            {allTags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => handleTagClick(tag)}
-                className={`px-3 py-1 rounded-full text-sm ${
-                  filterTag === tag
-                    ? "bg-[#F28C7C] text-black font-bold"
-                    : "bg-gray-700 text-gray-200"
-                }`}
-              >
-                #{tag}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* 列表 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {filtered.map((post, index) => (
-            <Link key={post.id} href={`/info/${post.id}`} className="group">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="flex flex-col md:flex-row items-stretch border border-[#F28C7C]/20 rounded-2xl overflow-hidden bg-[#121212]/80 hover:bg-[#1a1a1a]/90 shadow-lg hover:shadow-2xl transition-all duration-300"
-              >
-                <img
-                  src={post.coverUrl || "/default-cover.jpg"}
-                  alt={post.title}
-                  className="w-full md:w-56 h-44 md:h-auto object-cover scale-100 group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="flex-1 p-6 flex flex-col justify-between">
-                  <div>
-                    <h2 className="text-xl font-bold text-white group-hover:text-[#F28C7C] mb-2 transition-colors duration-200">
-                      {post.title}
-                    </h2>
-                  </div>
-                  <div className="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <span>
-                      {new Date(post.createdAt).toLocaleDateString("zh-TW")}
-                    </span>
-                    <div className="flex gap-2 flex-wrap">
-                      {post.tags?.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-[#F28C7C] bg-[#F28C7C]/10 px-2 py-0.5 rounded-full"
-                        >
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </Link>
           ))}
         </div>
+      )}
 
-        {filtered.length === 0 && (
-          <p className="text-center text-gray-400">沒有符合條件的公告。</p>
-        )}
+      {/* 列表 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {filtered.map((post, index) => (
+          <Link key={post.id} href={`/info/${post.id}`} className="group">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="flex flex-col md:flex-row items-stretch border border-[#F28C7C]/20 rounded-2xl overflow-hidden bg-[#121212]/80 hover:bg-[#1a1a1a]/90 shadow-lg hover:shadow-2xl transition-all duration-300"
+            >
+              <img
+                src={post.coverUrl || "/default-cover.jpg"}
+                alt={post.title}
+                className="w-full md:w-56 h-44 md:h-auto object-cover scale-100 group-hover:scale-105 transition-transform duration-300"
+              />
+              <div className="flex-1 p-6 flex flex-col justify-between">
+                <div>
+                  <h2 className="text-xl font-bold text-white group-hover:text-[#F28C7C] mb-2 transition-colors duration-200">
+                    {post.title}
+                  </h2>
+                </div>
+                <div className="mt-4 flex justify-between items-center text-xs text-gray-400">
+                  <span>
+                    {new Date(post.createdAt).toLocaleDateString("zh-TW")}
+                  </span>
+                  <div className="flex gap-2 flex-wrap">
+                    {post.tags?.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[#F28C7C] bg-[#F28C7C]/10 px-2 py-0.5 rounded-full"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </Link>
+        ))}
       </div>
-    </main>
+
+      {filtered.length === 0 && (
+        <p className="text-center text-gray-400">沒有符合條件的公告。</p>
+      )}
+    </HeroSection>
   );
 }

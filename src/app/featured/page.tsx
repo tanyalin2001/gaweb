@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import rawData from "../data/featured_decks.json" assert { type: "json" };
+import HeroSection from "@/components/HeroSection";
 
 interface CardEntry {
   card: string;
@@ -28,6 +29,8 @@ interface FeaturedDeck {
   deckName: string;
   record: string;
   deck?: Deck;
+  eventname: string;
+  date: string;
 }
 
 interface FeaturedData {
@@ -36,7 +39,6 @@ interface FeaturedData {
 }
 
 const data = rawData as unknown as FeaturedData;
-const intro = data.intro;
 const featuredDecks = data.decks;
 
 export default function FeaturedPage() {
@@ -58,7 +60,7 @@ export default function FeaturedPage() {
           } catch (err) {
             console.error(`Cover fetch failed for ${deck.id}:`, err);
           }
-        })
+        }),
       );
       setImageMap(map);
     };
@@ -67,44 +69,57 @@ export default function FeaturedPage() {
   }, []);
 
   return (
-    <main className="relative min-h-screen text-white font-sans px-6 pt-28 pb-20">
-      <div className="fixed inset-0 z-[-2]">
-        <Image src="/bg.png" alt="BG" fill className="object-cover" />
+    <HeroSection title="精選牌組" image="/waterbarrier-bg.png">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {featuredDecks.map((deck) => (
+          <Link
+            href={`/featured/${deck.id}`}
+            key={deck.id}
+            className="relative rounded-xl overflow-hidden border border-[#F28C7C]/30 hover:scale-[1.02] transition-transform group "
+          >
+            {/* 背景圖層 */}
+            <Image
+              src={imageMap[deck.id] || "/card-back.jpg"}
+              alt={deck.title}
+              fill
+              className="object-cover object-[center_31%] brightness-[0.4] scale-120 transition-transform duration-300"
+            />
+
+            {/* 遮罩層 */}
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+
+            {/* 內容層 */}
+            <div className="relative z-10 p-5 flex flex-col justify-between h-full">
+              <h2 className="text-xl font-bold text-[#F28C7C] leading-snug mb-3">
+                {deck.title}
+              </h2>
+
+              <ul className="text-xs text-gray-300 space-y-1 mb-3">
+                <li>
+                  <span className="text-white font-medium">賽事：</span>
+                  {deck.eventname}
+                </li>
+                <li>
+                  <span className="text-white font-medium">玩家：</span>
+                  {deck.playerName}（{deck.country}）
+                </li>
+                <li>
+                  <span className="text-white font-medium">日期：</span>
+                  {new Date(deck.date).toLocaleDateString("zh-TW")}
+                </li>
+                <li>
+                  <span className="text-white font-medium">戰績：</span>
+                  {deck.record}
+                </li>
+              </ul>
+
+              <p className="text-sm text-gray-200 leading-relaxed">
+                {deck.intro}
+              </p>
+            </div>
+          </Link>
+        ))}
       </div>
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-md z-[-1]" />
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-[#F28C7C] mb-6 text-center">
-          精選牌組
-        </h1>
-        <p className="text-gray-300 text-center max-w-2xl mx-auto mb-10 text-sm md:text-base">
-          {intro}
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredDecks.map((deck) => (
-            <Link
-              href={`/featured/${deck.id}`}
-              key={deck.id}
-              className="bg-black/70 backdrop-blur rounded-lg border border-[#F28C7C]/40 overflow-hidden hover:scale-[1.02] transition-transform"
-            >
-              <Image
-                src={imageMap[deck.id] || "/card-back.jpg"}
-                alt={deck.title}
-                width={640}
-                height={360}
-                className="w-full h-48 object-cover object-[0_20%]"
-              />
-              <div className="p-4">
-                <h2 className="text-xl font-bold text-[#F28C7C]">
-                  {deck.title}
-                </h2>
-                <p className="text-gray-300 text-sm mt-2">
-                  {deck.intro}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </main>
+    </HeroSection>
   );
 }

@@ -17,7 +17,7 @@ tags:
 ![Uncommon1](/info/20250501_MRCA_NewCard/Uncommon1.jpg)  
 ![Uncommon2](/info/20250501_MRCA_NewCard/Uncommon2.jpg)  
 ![Uncommon3](/info/20250501_MRCA_NewCard/Uncommon3.jpg)  
-![Uncommon4](/info/20250501_MRCA_NewCard/Uncommon4.jpg)  
+![Uncommon4](/info/20250501_MRCA_NewCard/Uncommon4.jpg)
 
 ---
 
@@ -25,13 +25,13 @@ tags:
 
 ![Rare1](/info/20250501_MRCA_NewCard/Rare1.png)  
 ![Rare2](/info/20250501_MRCA_NewCard/Rare2.png)  
-![Rare3](/info/20250501_MRCA_NewCard/Rare3.png)  
+![Rare3](/info/20250501_MRCA_NewCard/Rare3.png)
 
 ---
 
 ## Super Rare
 
-![SR](/info/20250501_MRCA_NewCard/SR.png)  
+![SR](/info/20250501_MRCA_NewCard/SR.png)
 
 ---
 
@@ -40,14 +40,14 @@ tags:
 ![UR1](/info/20250501_MRCA_NewCard/UR1.png)  
 ![UR2](/info/20250501_MRCA_NewCard/UR2.png)  
 ![UR3](/info/20250501_MRCA_NewCard/UR3.png)  
-![UR4](/info/20250501_MRCA_NewCard/UR4.png)  
+![UR4](/info/20250501_MRCA_NewCard/UR4.png)
 
 ---
 
 ## Collector Super Rares
 
 ![CSR1](/info/20250501_MRCA_NewCard/CSR1.jpg)  
-![CSR2](/info/20250501_MRCA_NewCard/CSR2.jpg)  
+![CSR2](/info/20250501_MRCA_NewCard/CSR2.jpg)
 
 ---
 
