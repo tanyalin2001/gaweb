@@ -35,14 +35,25 @@
       "country": "US",
       "date": "2025-05-04",
       "record": "4-0-2",
-      "intro": "",
-      "description": "",
-      "pros": "",
-      "cons": "",
+      "intro": "這副牌被譽為目前全遊戲最快速的套牌之一，能穩定在第2至第3回合完成擊殺，完美體現刺客 Zander 的風格。即使在此過程中 Zander 會承受不少傷害，例如透過 Clumsy Apprentice 抽牌，或使用 Impact Hammer 搭配 Heated Vengeance 打出高達7點傷害的爆發，目標都只有一個——在對手穩定之前殺死對手。",
+      "description": "這副牌圍繞著大量攻擊與非攻擊傷害進行快速爆發。攻擊方面可以依靠 Arthur 提供的傷害增益，例如 Gildas 平衡後可打出5傷，Captivating Cutthroat 與 Red Hare 在 Arthur 存在時也能打出4點傷害；Rococo 在低影響力情況下進場能造成2點傷害，搭配 Arthur 後能再打出2傷。Heated Vengeance 搭配 Impact Hammer 直接造成7點傷害也極具威脅，若同回合觸發 Poisoned Dagger，以上所有傷害來源還能再增加1點。",
+      "pros": [
+        "極為快速的傷害線，無論是攻擊或非攻擊傷害都有極高上限。",
+        "低費盟友配合 Arthur 可打出爆發力，例如 Gildas、Cutthroat、Red Hare。",
+        "非攻擊傷害手段豐富：Zander 可額外物質化武器並用 Blazing Throw 拋出造成4點傷害。",
+        "Demolition、Vermillion Decree 也能對英雄造成穩定傷害，還可延伸抽牌或額外燒其他盟友。",
+        "Poisoned Dagger 可全面提升以上所有來源的傷害量。"
+      ],
+      "cons": [
+        "若未能在2~3回合內擊殺對手，容易被對手的資源與干擾反制。",
+        "只要對手能成功物質化防守或抽到足夠資源穩住場面，此牌組將陷入困境。",
+        "因此此牌需搭配 Incapacitate 來阻止對手在關鍵回合干擾，確保斬殺成功。"
+      ],
       "eventlevel": "regionals",
       "price": "",
       "rank": "2"
     },
+
     {
       "id": "wind-seiryuu-guogia",
       "omni": "https://omni.gatcg.com/events/22374",
@@ -56,36 +67,23 @@
       "country": "US",
       "date": "2025-05-03",
       "record": "3-1-1",
-      "intro": "",
-      "description": "",
-      "pros": "",
-      "cons": "",
+      "intro": "這副牌透過放逐卡牌，讓 Fabled Azurite Fatestone 轉化為 Seiryuu, Azure Dragon，因此運轉速度極快，並能透過 Beseeched Fatestone 與 Beseech the Winds 雙軌展開。升到等級3後可藉由 Incandescent Reliquary 回復影響力，準備進行爆發回合，結合 Seiryuu 指令與 Byakko 指令可瞬間斬殺任何對手英雄——Seiryuu 連擊造成 10 傷害，再加上兩發 Arcane Blast 共 22 傷害，一回合爆發高達 32 傷！正如其名，這副牌如同青龍暴走，將敵方英雄摧毀殆盡。",
+      "description": "與其他依賴放逐 Arcane 卡的套牌（如 Rai）不同，這副牌能藉由大量放逐升級，並透過 Incandescent Reliquary 穩定場面。擁有多名盟友可爭取時間以湊齊關鍵指令卡來放逐 Arcane 卡完成 combo。Innervate Agility 能使郭嘉降級來賦予盟友 Spellshroud 或 Stealth，若 Seiryuu 存活時再免費升級回來，實現回血與保場雙重收益。",
+      "pros": [
+        "能透過放逐快速升級並用 Incandescent Reliquary 穩定場面，不依賴 Arcane 放逐如 Rai 一樣脆弱。",
+        "有多名盟友支援前期防守，等待 combo 成型。",
+        "Innervate Agility 可保護盟友、降級回血、再升級形成完整循環。"
+      ],
+      "cons": [
+        "Seiryuu 容易被送回物質區，Spellshroud 雖能防咒語，但無法防技能如 Ensnaring Fumes。",
+        "即使釋放血脈等級2封鎖目標，也難防 Dream Fairy 或 Arrow Trap 這類技能。",
+        "目前缺乏 Luxem 卡能從物質區回收 Seiryuu，唯一能救援的 Advent of Shenju 也需 Shenju 被擊倒才行，因此此牌組沒有放。"
+      ],
       "eventlevel": "regionals",
       "price": "",
       "rank": "1"
     },
     {
-      "id": "fire-aggro-lorraine",
-      "omni": "https://omni.gatcg.com/events/24206",
-      "cover": "",
-      "title": "Fire Aggro Zander",
-      "type": "eventdecklist",
-      "eventid": 24206,
-      "playerid": 763,
-      "eventname": "CakeTCG HVN Online Regional",
-      "playerName": "KBDestro",
-      "country": "US",
-      "date": "2025-05-03",
-      "record": "4-1-1",
-      "intro": "",
-      "description": "",
-      "pros": "",
-      "cons": "",
-      "eventlevel": "",
-      "price": "237.64",
-      "rank": "4"
-    },
-            {
       "id": "fire-luxem-zander",
       "omni": "https://omni.gatcg.com/events/21398",
       "cover": "",
@@ -98,43 +96,53 @@
       "country": "US",
       "date": "2025-05-03",
       "record": "6-0-1",
-      "intro": "靠記憶區與抽牌資源穩定地進行連擊與回復，是一副耐打又能持續輸出的 Luxem Zander 套牌。",
-      "description": "",
+      "intro": "靠記憶區揭示與抽牌資源穩定連擊與回復，是一副攻防兼備、爆發與續航兼具的套牌。",
+      "description": "本套牌以 Zander 的記憶揭示與 Luxem 牌為核心，透過高速抽牌與穩定資源讓整體運轉極為順暢。攻擊面可透過揭示如 Lightweaver’s Assault 等卡片來造成持續傷害，也能透過 Gleaming Cut 等揭示抽牌再轉為攻勢。防守方面則搭配 Tariff Ring、Safeguard Amulet、Serene Spirit of Fire 等牌來延緩壓力。Zander 的 Blinding Steel 能在回憶階段強制對手放置記憶卡，使我方主階幾乎無法被互動，進一步壓制對手節奏。",
       "pros": [
-        "抽牌效率高：多張咒語與技能牌能迅速濾牌與獲得手牌資源",
-        "穩定記憶區輸出：每回合能靠記憶區 Luxem 咒語造成傷害與回血",
-        "干擾與控制力強：Excalibur、Incapacitate、Vanish 等卡可破解對手干擾"
+        "抽牌手段豐富：Juggle Knives、Creative Shock、Scry the Skies 等卡能高效率抽濾牌，搭配  Uncover the Plot 配上 Gleaming Cut 進一步提升資源流動性。",
+        "記憶揭示效果強大：揭示 Luxem Sight 可回血、Lightweaver’s Assault 可造成傷害、Gleaming Cut 可抽兩張，搭配 Uncover the Plot 還可進一步取得準備指示物。",
+        "揭示控制與輔助：三等英雄 Zander, Blinding Steel 的效果能強迫對手放置記憶卡，有效干擾對手戰術計劃。",
+        "優秀干擾手段：Excalibur 可破壞 Nullifying Mirror、Safeguard Amulet 等干擾物件，Incapacitate 可有效干擾對方行動卡。",
+        "高續航體質：使用 Serene Spirit of Fire 作為英雄基礎，Zander 總血量提升至 31 點，大幅增強存活力。"
       ],
       "cons": [
-        "影響力不足風險：若過度放逐物質，後期可能缺乏影響力資源",
-        "法術傷害防護較弱：對於高非攻擊性法術傷害的套牌較難應對"
+        "中後期影響力壓力：若過早放逐過多卡片，會導致後期影響力不足，建議在 1 級後優先物質化防禦類卡片穩定資源。",
+        "法術傷害防護不足：套牌較缺乏針對法術傷害的應對手段，若對手以多來源非攻擊性傷害為主將較難應對，需靠 sideboard 如 Blanche、Crystallized Destiny 等補足防線。"
       ],
       "eventlevel": "Regionals",
       "price": "369.19",
       "rank": "1"
     },
-
-
     {
-      "id": "wind-balance-allies-lorraine",
-      "omni": "https://omni.gatcg.com/events/24230",
+      "id": "water-fractals-diaochan",
+      "omni": "https://omni.gatcg.com/events/22507",
       "cover": "",
-      "title": "Wind Balance Allies Lorraine",
+      "title": "Water Fractals Diao Chan",
       "type": "eventdecklist",
-      "eventid": 24230,
-      "playerid": 810,
-      "eventname": "EU Nationals 2025",
-      "playerName": "HenkieTheGoat",
+      "eventid": 22507,
+      "playerid": 4137,
+      "eventname": "National-SEA 2025",
+      "playerName": "TTA",
       "country": "US",
-      "date": "2025-04-26",
-      "record": "7-2-3",
-      "intro": "",
-      "description": "",
-      "pros": "",
-      "cons": "",
+      "date": "2025-04-05",
+      "record": "10-1-2",
+      "intro": "這是一副以水屬性構築的高爆發型貂蟬套牌，透過大量 Fractal 快速鋪場，於短時間內施放高額法術傷害達成斬殺。",
+      "description": "水貂蟬套牌依靠 Fractal 迅速鋪場與 Dissonant Fractal 出色的預示能力，穩定找出關鍵 Spells，例如 Refracting Missile、Shimmering Refraction 與 Burst Asunder，構築斬殺手段。張角能以 Fractals 作為支付抽取兩張牌，是本套牌資源延伸的核心，並可透過 Refreshment 與 Lost in Thought 調整手牌組合與費用節奏。在中期即可串連多張 Spells，打出 10 至 20 點以上的爆發傷害，搭配 Burst Asunder 終結對局。此牌組還搭配 Glimmering Refusal 與 Crystalline Mirror，有效干擾對手策略、拆除對手防禦，形成強大壓制力。",
+      "pros": [
+        "鋪場與預示節奏迅速，有時快可以第 3 至 4 回合終結對手。",
+        "抽濾牌手段豐富，能穩定取得關鍵 Spell。",
+        "Glimmering Refusal 在多 Fractal 場況下能輕易無效對方大招或關鍵回應手段。",
+        "Crystalline Mirror 可於進攻回合前拆除對方 Safeguard Amulet，確保 Burst Asunder 傷害成功打出。",
+        "Burst Asunder 無需犧牲 Fractals 即可施放，即使被回應也不虧，可藉由兩張連續施放壓迫對方交出防禦手段後再完成斬殺。"
+      ],
+      "cons": [
+        "張角體力低，若遭遇 Stifling Trap 等干擾手段，難以達成抽二條件；而套牌資源運轉高度依賴張角，若無法穩定抽牌將嚴重降低勝率。",
+        "牌組極度依賴 Fractals 場面，若對方能持續清除場上 Fractal，將大幅削弱 Refracting Missile、Shimmering Refraction、Burst Asunder 與 Glimmering Refusal 的效益。",
+        "缺乏穩定的清場手段，除 Gildas 外幾乎無法有效處理對手多體友軍場面。"
+      ],
       "eventlevel": "nationals",
-      "price": "453.49",
-      "rank": "1"
+      "price": "325.59",
+      "rank": "2"
     }
   ]
 }

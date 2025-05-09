@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import rawData from "../data/featured_decks.json" assert { type: "json" };
 import HeroSection from "@/components/HeroSection";
@@ -21,16 +20,18 @@ interface FeaturedDeck {
   id: string;
   intro: string;
   title: string;
-  cover: string;
+  cover?: string;
   description: string;
   strategy?: string;
   playerName: string;
   country: string;
   deckName: string;
   record: string;
+  rank?: string;
   deck?: Deck;
   eventname: string;
   date: string;
+  eventlevel?: string;
 }
 
 interface FeaturedData {
@@ -41,82 +42,90 @@ interface FeaturedData {
 const data = rawData as unknown as FeaturedData;
 const featuredDecks = data.decks;
 
+const EVENT_LEVELS = [
+  "store championships",
+  "regionals",
+  "ascents",
+  "nationals",
+  "worlds",
+];
+
 export default function FeaturedPage() {
-  const [imageMap, setImageMap] = useState<Record<string, string>>({});
+  const [filter, setFilter] = useState<string>("");
+  const [filteredDecks, setFilteredDecks] =
+    useState<FeaturedDeck[]>(featuredDecks);
 
   useEffect(() => {
-    const loadCovers = async () => {
-      const map: Record<string, string> = {};
-      await Promise.all(
-        featuredDecks.map(async (deck) => {
-          try {
-            const res = await fetch(deck.cover);
-            if (!res.ok) throw new Error("Failed to fetch cover");
-            const data = await res.json();
-            const imgPath = data.editions?.[0]?.image;
-            if (imgPath) {
-              map[deck.id] = `https://api.gatcg.com${imgPath}`;
-            }
-          } catch (err) {
-            console.error(`Cover fetch failed for ${deck.id}:`, err);
-          }
-        }),
+    if (!filter) {
+      setFilteredDecks(featuredDecks);
+    } else {
+      setFilteredDecks(
+        featuredDecks.filter(
+          (deck) => deck.eventlevel?.toLowerCase() === filter,
+        ),
       );
-      setImageMap(map);
-    };
-
-    loadCovers();
-  }, []);
+    }
+  }, [filter]);
 
   return (
     <HeroSection title="精選牌組" image="/waterbarrier-bg.png">
+      <div className="mb-8">
+        <label className="text-white font-medium mr-2">選擇賽事等級：</label>
+        <select
+          className="bg-[#1a1a1a] text-white border border-gray-600 px-4 py-2 rounded"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="">全部</option>
+          {EVENT_LEVELS.map((lvl) => (
+            <option key={lvl} value={lvl}>
+              {lvl}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {featuredDecks.map((deck) => (
+        {filteredDecks.map((deck) => (
           <Link
             href={`/featured/${deck.id}`}
             key={deck.id}
-            className="relative rounded-xl overflow-hidden border border-[#F28C7C]/30 hover:scale-[1.02] transition-transform group "
+            className="relative rounded-xl overflow-hidden border border-[#F28C7C]/30 bg-black/60 p-4 hover:scale-[1.02] transition-transform"
           >
-            {/* 背景圖層 */}
-            <Image
-              src={imageMap[deck.id] || "/card-back.jpg"}
-              alt={deck.title}
-              fill
-              className="object-cover object-[center_31%] brightness-[0.4] scale-120 transition-transform duration-300"
-            />
-
-            {/* 遮罩層 */}
-            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-
-            {/* 內容層 */}
-            <div className="relative z-10 p-5 flex flex-col justify-between h-full">
-              <h2 className="text-xl font-bold text-[#F28C7C] leading-snug mb-3">
-                {deck.title}
-              </h2>
-
-              <ul className="text-xs text-gray-300 space-y-1 mb-3">
-                <li>
-                  <span className="text-white font-medium">賽事：</span>
-                  {deck.eventname}
-                </li>
-                <li>
-                  <span className="text-white font-medium">玩家：</span>
-                  {deck.playerName}（{deck.country}）
-                </li>
-                <li>
-                  <span className="text-white font-medium">日期：</span>
-                  {new Date(deck.date).toLocaleDateString("zh-TW")}
-                </li>
-                <li>
-                  <span className="text-white font-medium">戰績：</span>
-                  {deck.record}
-                </li>
-              </ul>
-
-              <p className="text-sm text-gray-200 leading-relaxed">
+            <h2 className="text-xl font-bold text-[#F28C7C] mb-2">
+              {deck.title}
+            </h2>
+            <ul className="text-sm text-gray-300 space-y-1 mb-2">
+              <li>
+                <span className="text-white font-medium">賽事：</span>
+                {deck.eventname}
+              </li>
+              <li>
+                <span className="text-white font-medium">賽事等級：</span>
+                {deck.eventlevel || "-"}
+              </li>
+              <li>
+                <span className="text-white font-medium">玩家：</span>
+                {deck.playerName}（{deck.country}）
+              </li>
+              <li>
+                <span className="text-white font-medium">日期：</span>
+                {new Date(deck.date).toLocaleDateString("zh-TW")}
+              </li>
+              <li>
+                <span className="text-white font-medium">戰績：</span>
+                {deck.record}
+              </li>
+              <li>
+                <span className="text-white font-medium">排名：</span>
+                {deck.rank || "-"}
+              </li>
+            </ul>
+            {deck.intro && (
+              <p className="text-sm text-gray-200 leading-relaxed line-clamp-3">
                 {deck.intro}
               </p>
-            </div>
+            )}
           </Link>
         ))}
       </div>

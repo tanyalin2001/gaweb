@@ -65,11 +65,19 @@ export default async function FeaturedDeckPage({
   let deck: Deck | null = null;
   let eventData: any = null;
 
-  if (deckEntry.type === "eventdecklist" && deckEntry.eventid && deckEntry.playerid) {
+  if (
+    deckEntry.type === "eventdecklist" &&
+    deckEntry.eventid &&
+    deckEntry.playerid
+  ) {
     try {
       const [deckRes, eventRes] = await Promise.all([
-        fetch(`https://omni.gatcg.com/api/events/decklist?id=${deckEntry.eventid}&player=${deckEntry.playerid}`),
-        fetch(`https://omni.gatcg.com/api/events/event?id=${deckEntry.eventid}`),
+        fetch(
+          `https://omni.gatcg.com/api/events/decklist?id=${deckEntry.eventid}&player=${deckEntry.playerid}`,
+        ),
+        fetch(
+          `https://omni.gatcg.com/api/events/event?id=${deckEntry.eventid}`,
+        ),
       ]);
 
       if (!deckRes.ok || !eventRes.ok) throw new Error("API fetch failed");
@@ -78,9 +86,18 @@ export default async function FeaturedDeckPage({
       eventData = await eventRes.json();
 
       deck = {
-        main: deckData.main.map((c: any) => ({ card: c.card, quantity: c.quantity })),
-        material: deckData.material?.map((c: any) => ({ card: c.card, quantity: c.quantity })),
-        sideboard: deckData.sideboard?.map((c: any) => ({ card: c.card, quantity: c.quantity })),
+        main: deckData.main.map((c: any) => ({
+          card: c.card,
+          quantity: c.quantity,
+        })),
+        material: deckData.material?.map((c: any) => ({
+          card: c.card,
+          quantity: c.quantity,
+        })),
+        sideboard: deckData.sideboard?.map((c: any) => ({
+          card: c.card,
+          quantity: c.quantity,
+        })),
       };
     } catch (err) {
       console.error("API failed", err);
@@ -89,14 +106,37 @@ export default async function FeaturedDeckPage({
 
   if (!deck) return notFound();
 
-  const playerName = deckEntry.playerName || eventData?.players?.find((p: any) => p.playerId === deckEntry.playerid)?.playerName || "-";
-  const country = deckEntry.country || eventData?.players?.find((p: any) => p.playerId === deckEntry.playerid)?.country || "-";
-  const record = deckEntry.record || eventData?.players?.find((p: any) => p.playerId === deckEntry.playerid)?.record || "-";
-  const rank = deckEntry.rank || eventData?.players?.find((p: any) => p.playerId === deckEntry.playerid)?.rank || "-";
-  const date = deckEntry.date || (eventData?.startDate ? new Date(eventData.startDate).toISOString().split("T")[0] : "-");
+  const playerName =
+    deckEntry.playerName ||
+    eventData?.players?.find((p: any) => p.playerId === deckEntry.playerid)
+      ?.playerName ||
+    "-";
+  const country =
+    deckEntry.country ||
+    eventData?.players?.find((p: any) => p.playerId === deckEntry.playerid)
+      ?.country ||
+    "-";
+  const record =
+    deckEntry.record ||
+    eventData?.players?.find((p: any) => p.playerId === deckEntry.playerid)
+      ?.record ||
+    "-";
+  const rank =
+    deckEntry.rank ||
+    eventData?.players?.find((p: any) => p.playerId === deckEntry.playerid)
+      ?.rank ||
+    "-";
+  const date =
+    deckEntry.date ||
+    (eventData?.startDate
+      ? new Date(eventData.startDate).toISOString().split("T")[0]
+      : "-");
   const eventname = deckEntry.eventname || eventData?.name || "";
   const eventlevel = deckEntry.eventlevel || eventData?.eventType || "";
-  const omnidexUrl = deckEntry.eventid && deckEntry.playerid ? `https://omni.gatcg.com/events/${deckEntry.eventid}?player=${deckEntry.playerid}` : "";
+  const omnidexUrl =
+    deckEntry.eventid && deckEntry.playerid
+      ? `https://omni.gatcg.com/events/${deckEntry.eventid}?player=${deckEntry.playerid}`
+      : "";
 
   return (
     <main className="relative min-h-screen text-white px-6 pt-28 pb-20 text-lg">
@@ -105,10 +145,13 @@ export default async function FeaturedDeckPage({
       </div>
       <div className="absolute inset-0 bg-black/80 backdrop-blur-md z-[-1]" />
       <div className="relative z-10 max-w-6xl mx-auto">
-        <h1 className="text-5xl font-bold text-[#F28C7C] mb-2">{deckEntry.title}</h1>
+        <h1 className="text-5xl font-bold text-[#F28C7C] mb-2">
+          {deckEntry.title}
+        </h1>
 
         <p className="text-gray-300 mb-1">
-          玩家：{playerName}｜國家：{country}｜戰績：{record}｜排名：{rank}｜日期：{date}
+          玩家：{playerName}｜國家：{country}｜戰績：{record}｜排名：{rank}
+          ｜日期：{date}
         </p>
 
         {eventname && (
@@ -130,24 +173,39 @@ export default async function FeaturedDeckPage({
           </p>
         )}
 
-        {(deckEntry.intro || deckEntry.description || deckEntry.pros?.length || deckEntry.cons?.length) && (
+        {(deckEntry.intro ||
+          deckEntry.description ||
+          deckEntry.pros?.length ||
+          deckEntry.cons?.length) && (
           <div className="mb-8 bg-black/60 p-4 rounded border border-[#F28C7C]/40">
             <h2 className="text-2xl font-bold mb-2 text-[#F28C7C]">牌組介紹</h2>
-            {deckEntry.intro && <p className="text-gray-300 whitespace-pre-line">{deckEntry.intro}</p>}
-            {deckEntry.description && <p className="text-gray-300 mt-4 whitespace-pre-line">{deckEntry.description}</p>}
-            {deckEntry.pros?.length > 0 && (
+            {deckEntry.intro && (
+              <p className="text-gray-300 whitespace-pre-line">
+                {deckEntry.intro}
+              </p>
+            )}
+            {deckEntry.description && (
+              <p className="text-gray-300 mt-4 whitespace-pre-line">
+                {deckEntry.description}
+              </p>
+            )}
+            {deckEntry.pros && deckEntry.pros.length > 0 && (
               <div className="mt-4">
-                <h3 className="text-lg font-semibold text-[#A0D468]">優點：</h3>
+                <h3 className="text-lg font-semibold text-[#A0D468]">優點</h3>
                 <ul className="list-disc list-inside text-gray-300">
-                  {deckEntry.pros.map((p, i) => <li key={i}>{p}</li>)}
+                  {deckEntry.pros.map((p, i) => (
+                    <li key={i}>{p}</li>
+                  ))}
                 </ul>
               </div>
             )}
-            {deckEntry.cons?.length > 0 && (
+            {deckEntry.cons && deckEntry.cons.length > 0 && (
               <div className="mt-4">
-                <h3 className="text-lg font-semibold text-[#ED5565]">缺點：</h3>
+                <h3 className="text-lg font-semibold text-[#ED5565]">缺點</h3>
                 <ul className="list-disc list-inside text-gray-300">
-                  {deckEntry.cons.map((c, i) => <li key={i}>{c}</li>)}
+                  {deckEntry.cons.map((c, i) => (
+                    <li key={i}>{c}</li>
+                  ))}
                 </ul>
               </div>
             )}
@@ -156,28 +214,41 @@ export default async function FeaturedDeckPage({
 
         {deckEntry.price && (
           <div className="mb-8 bg-black/60 p-4 rounded border border-[#F28C7C]/40">
-            <h2 className="text-2xl font-bold mb-2 text-[#F28C7C]">📊 額外資訊</h2>
+            <h2 className="text-2xl font-bold mb-2 text-[#F28C7C]">
+              📊 額外資訊
+            </h2>
             <p className="text-gray-300">牌價：約 ${deckEntry.price}</p>
           </div>
         )}
 
         {deckEntry.strategy && (
           <div className="mb-8 bg-black/60 p-4 rounded border border-[#F28C7C]/40">
-            <h2 className="text-2xl font-bold mb-2 text-[#F28C7C]">📘 使用指南</h2>
-            <p className="text-gray-300 whitespace-pre-line">{deckEntry.strategy}</p>
+            <h2 className="text-2xl font-bold mb-2 text-[#F28C7C]">
+              📘 使用指南
+            </h2>
+            <p className="text-gray-300 whitespace-pre-line">
+              {deckEntry.strategy}
+            </p>
           </div>
         )}
 
         <div className="space-y-10">
-          {deck.material?.length && await renderCardGrid("Material Deck", deck.material, "material")}
-          {deck.main?.length && await renderCardGrid("Main Deck", deck.main, "main")}
-          {deck.sideboard?.length && await renderCardGrid("Sideboard", deck.sideboard, "sideboard")}
+          {deck.material?.length &&
+            (await renderCardGrid("Material Deck", deck.material, "material"))}
+          {deck.main?.length &&
+            (await renderCardGrid("Main Deck", deck.main, "main"))}
+          {deck.sideboard?.length &&
+            (await renderCardGrid("Sideboard", deck.sideboard, "sideboard"))}
         </div>
       </div>
     </main>
   );
 
-  async function renderCardGrid(title: string, cards: CardEntry[], section: string) {
+  async function renderCardGrid(
+    title: string,
+    cards: CardEntry[],
+    section: string,
+  ) {
     const imageMap: Record<string, string> = {};
 
     await Promise.all(
@@ -194,7 +265,7 @@ export default async function FeaturedDeckPage({
         } catch (err) {
           console.error("Image fetch failed for", card.card);
         }
-      })
+      }),
     );
 
     return (
