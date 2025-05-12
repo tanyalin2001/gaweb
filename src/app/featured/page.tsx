@@ -59,7 +59,9 @@ export default function FeaturedPage() {
   const [level, setLevel] = useState<string>("");
   const [element, setElement] = useState<string>("");
   const [champion, setChampion] = useState<string>("");
-  const [filteredDecks, setFilteredDecks] = useState<FeaturedDeck[]>(featuredDecks);
+  const [filteredDecks, setFilteredDecks] = useState<FeaturedDeck[]>(() => {
+  return [...featuredDecks].sort((a, b) => b.date.localeCompare(a.date));
+});
 
   useEffect(() => {
     let decks = [...featuredDecks];
@@ -128,9 +130,9 @@ export default function FeaturedPage() {
                 <ul className="text-sm text-gray-300 space-y-1">
                   <li><span className="text-white font-medium">賽事：</span>{deck.eventname}</li>
                   <li><span className="text-white font-medium">等級：</span>{deck.eventlevel || "-"}</li>
-                  <li><span className="text-white font-medium">玩家：</span>{deck.playerName}（{deck.country}）</li>
                   <li><span className="text-white font-medium">屬性：</span>{deck.element}</li>
                   <li><span className="text-white font-medium">英雄：</span>{deck.champion}</li>
+                  <li><span className="text-white font-medium">玩家：</span>{deck.playerName}（{deck.country}）</li>
                   <li><span className="text-white font-medium">日期：</span>{new Date(deck.date).toLocaleDateString("zh-TW")}</li>
                   <li><span className="text-white font-medium">戰績：</span>{deck.record}</li>
                   <li><span className="text-white font-medium">排名：</span>{deck.rank || "-"}</li>
@@ -140,7 +142,7 @@ export default function FeaturedPage() {
                   alt={deck.champion}
                   width={120}
                   height={120}
-                  className="absolute bottom-0 right-0 w-[120px] h-[120px] object-contain opacity-80"
+                  className="absolute bottom-0 right-0 w-[120px] h-[120px] object-contain opacity-70"
                   onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
                 />
               </div>
