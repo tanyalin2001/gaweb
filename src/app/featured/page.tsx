@@ -120,7 +120,7 @@ export default function FeaturedPage() {
             <Link
               href={`/featured/${deck.id}`}
               key={deck.id}
-              className={`relative rounded-xl overflow-hidden p-5 hover:scale-[1.01] transition-transform shadow-lg backdrop-blur-md bg-opacity-40 backdrop-blur-lg border border-white/10 ${deck.element === 'Fire' ? 'bg-red-800/50' : deck.element === 'Water' ? 'bg-blue-800/50' : deck.element === 'Wind' ? 'bg-green-800/50' : 'bg-gray-800/50'}`}
+              className={`relative rounded-xl overflow-hidden p-5 hover:scale-[1.01] transition-transform shadow-lg backdrop-blur-md bg-opacity-40 backdrop-blur-lg border border-white/10 ${deck.element === 'Fire' ? 'bg-red-400/60' : deck.element === 'Water' ? 'bg-blue-400/60' : deck.element === 'Wind' ? 'bg-green-400/60' : 'bg-gray-800/50'}`}
             >
               <div className="absolute inset-0 bg-black/60 z-0" />
               <div className="relative z-10">
@@ -142,7 +142,7 @@ export default function FeaturedPage() {
                   alt={deck.champion}
                   width={120}
                   height={120}
-                  className="absolute bottom-0 right-0 w-[120px] h-[120px] object-contain opacity-70"
+                  className="absolute bottom-0 right-0 w-[120px] h-[120px] object-contain"
                   onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
                 />
               </div>
