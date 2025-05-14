@@ -1,8 +1,7 @@
-"use client";
-
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import rawData from "../../data/featured_decks.json" assert { type: "json" };
+import rawData from "../../data/featured_decks.json";
+import CardImage from "@/components/CardImage";
 
 interface CardEntry {
   card: string;
@@ -36,30 +35,22 @@ interface FeaturedDeck {
   eventlevel?: string;
 }
 
-function slugify(cardName: string): string {
-  return cardName
-    .toLowerCase()
-    .replace(/'/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+interface FeaturedDecksWrapper {
+  intro: string;
+  decks: FeaturedDeck[];
 }
+
+export const revalidate = 3600;
 
 export default async function FeaturedDeckPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const { id } = await Promise.resolve(params);
-
-  interface FeaturedDecksWrapper {
-    intro: string;
-    decks: FeaturedDeck[];
-  }
-
+  const { id } = params;
   const data = rawData as FeaturedDecksWrapper;
-  const decks = data.decks;
-
-  const deckEntry = decks.find((d) => d.id === id);
+  const deckEntry = data.decks.find(d => d.id === id);
+  
   if (!deckEntry) return notFound();
 
   let deck: Deck | null = null;
@@ -73,10 +64,10 @@ export default async function FeaturedDeckPage({
     try {
       const [deckRes, eventRes] = await Promise.all([
         fetch(
-          `https://omni.gatcg.com/api/events/decklist?id=${deckEntry.eventid}&player=${deckEntry.playerid}`,
+          `https://omni.gatcg.com/api/events/decklist?id=${deckEntry.eventid}&player=${deckEntry.playerid}`
         ),
         fetch(
-          `https://omni.gatcg.com/api/events/event?id=${deckEntry.eventid}`,
+          `https://omni.gatcg.com/api/events/event?id=${deckEntry.eventid}`
         ),
       ]);
 
@@ -101,6 +92,7 @@ export default async function FeaturedDeckPage({
       };
     } catch (err) {
       console.error("API failed", err);
+      return notFound();
     }
   }
 
@@ -231,43 +223,17 @@ export default async function FeaturedDeckPage({
             </p>
           </div>
         )}
-
-        <div className="space-y-10">
-          {deck.material?.length &&
-            (await renderCardGrid("Material Deck", deck.material, "material"))}
-          {deck.main?.length &&
-            (await renderCardGrid("Main Deck", deck.main, "main"))}
-          {deck.sideboard?.length &&
-            (await renderCardGrid("Sideboard", deck.sideboard, "sideboard"))}
-        </div>
+      <div className="space-y-10">
+        {deck.material?.length && renderCardGrid("Material Deck", deck.material, "material")}
+        {deck.main?.length && renderCardGrid("Main Deck", deck.main, "main")}
+        {deck.sideboard?.length && renderCardGrid("Sideboard", deck.sideboard, "sideboard")}
       </div>
+      </div> 
+
     </main>
   );
 
-  async function renderCardGrid(
-    title: string,
-    cards: CardEntry[],
-    section: string,
-  ) {
-    const imageMap: Record<string, string> = {};
-
-    await Promise.all(
-      cards.map(async (card) => {
-        const slug = slugify(card.card);
-        try {
-          const res = await fetch(`https://api.gatcg.com/cards/${slug}`);
-          if (!res.ok) throw new Error("Card not found");
-          const data = await res.json();
-          const image = data.editions?.[0]?.image;
-          if (image) {
-            imageMap[card.card] = `https://api.gatcg.com${image}`;
-          }
-        } catch (err) {
-          console.error("Image fetch failed for", card.card);
-        }
-      }),
-    );
-
+  function renderCardGrid(title: string, cards: CardEntry[], section: string) {
     return (
       <div className="mb-8 bg-black/60 p-4 rounded border border-[#F28C7C]/40">
         <h3 className="text-xl font-semibold text-white mb-2">
@@ -275,23 +241,7 @@ export default async function FeaturedDeckPage({
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-3">
           {cards.map((card, i) => (
-            <div
-              key={`${section}-${i}`}
-              className="text-center text-sm relative group"
-              title={card.card}
-            >
-              <div className="relative transition-transform origin-center group-hover:scale-[2] group-hover:z-[999]">
-                <img
-                  src={imageMap[card.card] || "/card-back.jpg"}
-                  alt={card.card}
-                  width={160}
-                  height={220}
-                  className="rounded-lg border border-gray-700 mx-auto"
-                />
-              </div>
-              <p className="text-white mt-1 font-medium text-sm">{card.card}</p>
-              <p className="text-gray-300 text-sm">x{card.quantity}</p>
-            </div>
+            <CardImage key={`${section}-${i}`} card={card} />
           ))}
         </div>
       </div>

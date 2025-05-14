@@ -45,9 +45,17 @@ interface FeaturedData {
 const data = rawData as unknown as FeaturedData;
 const featuredDecks = data.decks;
 
-const EVENT_LEVELS = ["store championships", "regionals", "ascents", "nationals", "worlds"];
+const EVENT_LEVELS = [
+  "store championships",
+  "regionals",
+  "ascents",
+  "nationals",
+  "worlds",
+];
 const ELEMENTS = ["Wind", "Fire", "Water"];
-const CHAMPIONS = [...Array.from(new Set(featuredDecks.map(d => d.champion)))];
+const CHAMPIONS = [
+  ...Array.from(new Set(featuredDecks.map((d) => d.champion))),
+];
 
 const elementStyles: Record<string, string> = {
   Fire: "from-red-900 to-red-700 hover:from-red-800 hover:to-red-600",
@@ -60,14 +68,15 @@ export default function FeaturedPage() {
   const [element, setElement] = useState<string>("");
   const [champion, setChampion] = useState<string>("");
   const [filteredDecks, setFilteredDecks] = useState<FeaturedDeck[]>(() => {
-  return [...featuredDecks].sort((a, b) => b.date.localeCompare(a.date));
-});
+    return [...featuredDecks].sort((a, b) => b.date.localeCompare(a.date));
+  });
 
   useEffect(() => {
     let decks = [...featuredDecks];
-    if (level) decks = decks.filter(deck => deck.eventlevel?.toLowerCase() === level);
-    if (element) decks = decks.filter(deck => deck.element === element);
-    if (champion) decks = decks.filter(deck => deck.champion === champion);
+    if (level)
+      decks = decks.filter((deck) => deck.eventlevel?.toLowerCase() === level);
+    if (element) decks = decks.filter((deck) => deck.element === element);
+    if (champion) decks = decks.filter((deck) => deck.champion === champion);
     decks.sort((a, b) => b.date.localeCompare(a.date));
     setFilteredDecks(decks);
   }, [level, element, champion]);
@@ -83,7 +92,9 @@ export default function FeaturedPage() {
         >
           <option value="">全部</option>
           {EVENT_LEVELS.map((lvl) => (
-            <option key={lvl} value={lvl}>{lvl}</option>
+            <option key={lvl} value={lvl}>
+              {lvl}
+            </option>
           ))}
         </select>
 
@@ -95,7 +106,9 @@ export default function FeaturedPage() {
         >
           <option value="">全部</option>
           {ELEMENTS.map((el) => (
-            <option key={el} value={el}>{el}</option>
+            <option key={el} value={el}>
+              {el}
+            </option>
           ))}
         </select>
 
@@ -107,20 +120,24 @@ export default function FeaturedPage() {
         >
           <option value="">全部</option>
           {CHAMPIONS.map((ch) => (
-            <option key={ch} value={ch}>{ch}</option>
+            <option key={ch} value={ch}>
+              {ch}
+            </option>
           ))}
         </select>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredDecks.map((deck) => {
-          const elementClass = elementStyles[deck.element] || "from-gray-800 to-gray-600 hover:from-gray-700 hover:to-gray-500";
+          const elementClass =
+            elementStyles[deck.element] ||
+            "from-gray-800 to-gray-600 hover:from-gray-700 hover:to-gray-500";
 
           return (
             <Link
               href={`/featured/${deck.id}`}
               key={deck.id}
-              className={`relative rounded-xl overflow-hidden p-5 hover:scale-[1.01] transition-transform shadow-lg backdrop-blur-md bg-opacity-40 backdrop-blur-lg border border-white/10 ${deck.element === 'Fire' ? 'bg-red-400/60' : deck.element === 'Water' ? 'bg-blue-400/60' : deck.element === 'Wind' ? 'bg-green-400/60' : 'bg-gray-800/50'}`}
+              className={`relative rounded-xl overflow-hidden p-5 hover:scale-[1.01] transition-transform shadow-lg backdrop-blur-md bg-opacity-40 backdrop-blur-lg border border-white/10 ${deck.element === "Fire" ? "bg-red-400/60" : deck.element === "Water" ? "bg-blue-400/60" : deck.element === "Wind" ? "bg-green-400/60" : "bg-gray-800/50"}`}
             >
               <div className="absolute inset-0 bg-black/60 z-0" />
               <div className="relative z-10">
@@ -128,22 +145,48 @@ export default function FeaturedPage() {
                   {deck.title}
                 </h2>
                 <ul className="text-sm text-gray-300 space-y-1">
-                  <li><span className="text-white font-medium">賽事：</span>{deck.eventname}</li>
-                  <li><span className="text-white font-medium">等級：</span>{deck.eventlevel || "-"}</li>
-                  <li><span className="text-white font-medium">屬性：</span>{deck.element}</li>
-                  <li><span className="text-white font-medium">英雄：</span>{deck.champion}</li>
-                  <li><span className="text-white font-medium">玩家：</span>{deck.playerName}（{deck.country}）</li>
-                  <li><span className="text-white font-medium">日期：</span>{new Date(deck.date).toLocaleDateString("zh-TW")}</li>
-                  <li><span className="text-white font-medium">戰績：</span>{deck.record}</li>
-                  <li><span className="text-white font-medium">排名：</span>{deck.rank || "-"}</li>
+                  <li>
+                    <span className="text-white font-medium">賽事：</span>
+                    {deck.eventname}
+                  </li>
+                  <li>
+                    <span className="text-white font-medium">等級：</span>
+                    {deck.eventlevel || "-"}
+                  </li>
+                  <li>
+                    <span className="text-white font-medium">屬性：</span>
+                    {deck.element}
+                  </li>
+                  <li>
+                    <span className="text-white font-medium">英雄：</span>
+                    {deck.champion}
+                  </li>
+                  <li>
+                    <span className="text-white font-medium">玩家：</span>
+                    {deck.playerName}（{deck.country}）
+                  </li>
+                  <li>
+                    <span className="text-white font-medium">日期：</span>
+                    {new Date(deck.date).toLocaleDateString("zh-TW")}
+                  </li>
+                  <li>
+                    <span className="text-white font-medium">戰績：</span>
+                    {deck.record}
+                  </li>
+                  <li>
+                    <span className="text-white font-medium">排名：</span>
+                    {deck.rank || "-"}
+                  </li>
                 </ul>
                 <Image
-                  src={`/champions/${deck.champion.toLowerCase().replace(/\s/g, '-')}.png`}
+                  src={`/champions/${deck.champion.toLowerCase().replace(/\s/g, "-")}.png`}
                   alt={deck.champion}
                   width={120}
                   height={120}
                   className="absolute bottom-0 right-0 w-[120px] h-[120px] object-contain"
-                  onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
+                  onError={(e) =>
+                    ((e.target as HTMLImageElement).style.display = "none")
+                  }
                 />
               </div>
             </Link>
