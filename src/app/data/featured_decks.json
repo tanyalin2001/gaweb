@@ -3,6 +3,7 @@
   "decks": [
     {
       "id": "wind-huaji-allies-lorraine",
+      "cover": "/champion/lorraine.png",
       "element": "Wind",
       "champion": "Lorraine",
       "omni": "https://omni.gatcg.com/events/24230",

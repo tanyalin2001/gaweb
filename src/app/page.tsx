@@ -3,6 +3,33 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+// @ts-ignore
+import featuredData from "./data/featured_decks.json" assert { type: "json" };
+
+interface FeaturedDeck {
+  id: string;
+  title: string;
+  cover?: string;
+  type: "fundeck" | "eventdecklist";
+  eventid?: number;
+  playerid?: number;
+  intro: string;
+  description: string;
+  strategy?: string;
+  price?: string;
+  rank?: string;
+  pros?: string[];
+  cons?: string[];
+  playerName?: string;
+  country?: string;
+  record?: string;
+  date?: string;
+  eventname?: string;
+  eventlevel?: string;
+  champion: string;
+  element: string;
+  omni?: string;
+}
 
 export default function HomePage() {
   return (
@@ -67,27 +94,32 @@ export default function HomePage() {
             特色套牌
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-            {["風戰士", "風 Shadowstrike Tristan", "火光刺"].map((name, i) => (
-              <motion.div
-                key={i}
-                className="bg-[#1a1a1a]/90 rounded-2xl overflow-hidden border border-neutral-600 hover:shadow-xl hover:scale-[1.015] transition-all"
-                whileHover={{ y: -4 }}
-              >
-                <Image
-                  src={`/feature-decks/deck-${i + 1}.png`}
-                  alt={name}
-                  width={400}
-                  height={250}
-                  className="w-full h-56 object-cover object-[center_20%]"
-                />
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-[#F28C7C] mb-1">
-                    {name}
-                  </h3>
-                  <p className="text-sm text-gray-200">套牌重點</p>
-                </div>
-              </motion.div>
-            ))}
+          {featuredData.decks
+            .slice(0, 3) // get latest 3 decks
+            .map((deck) => {
+              const typedDeck = deck as FeaturedDeck;
+              return (
+                <motion.div
+                  key={typedDeck.id}
+                  className="bg-[#1a1a1a]/90 rounded-2xl overflow-hidden border border-neutral-600 hover:shadow-xl hover:scale-[1.015] transition-all"
+                  whileHover={{ y: -4 }}
+                >
+                  <Link href={`/featured/${typedDeck.id}`}>
+                    <Image
+                      src={typedDeck.cover ?? "/default-cover.png"}
+                      alt={typedDeck.title}
+                      width={400}
+                      height={250}
+                      className="w-full h-56 object-cover object-[center_20%]"
+                    />
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-[#F28C7C] mb-1">{typedDeck.title}</h3>
+                      <p className="text-sm text-gray-200">{typedDeck.intro?.slice(0, 40)}...</p>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
