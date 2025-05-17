@@ -42,12 +42,19 @@ interface FeaturedDecksWrapper {
 
 export const revalidate = 3600;
 
+export async function generateStaticParams() {
+  const data = rawData as FeaturedDecksWrapper;
+  return data.decks.map((deck) => ({
+    id: deck.id,
+  }));
+}
+
 export default async function FeaturedDeckPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const { id } = params;
+  const { id } = await params;
   const data = rawData as FeaturedDecksWrapper;
   const deckEntry = data.decks.find(d => d.id === id);
   
@@ -64,10 +71,12 @@ export default async function FeaturedDeckPage({
     try {
       const [deckRes, eventRes] = await Promise.all([
         fetch(
-          `https://omni.gatcg.com/api/events/decklist?id=${deckEntry.eventid}&player=${deckEntry.playerid}`
+            `https://omni.gatcg.com/api/events/decklist?id=${deckEntry.eventid}&player=${deckEntry.playerid}`,
+            { next: { revalidate: 3600 } }
         ),
         fetch(
-          `https://omni.gatcg.com/api/events/event?id=${deckEntry.eventid}`
+            `https://omni.gatcg.com/api/events/event?id=${deckEntry.eventid}`,
+            { next: { revalidate: 3600 } }
         ),
       ]);
 
