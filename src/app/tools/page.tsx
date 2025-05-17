@@ -71,8 +71,9 @@ export default function GAWebsiteGuide() {
         <h1 className="text-4xl md:text-5xl font-extrabold text-center text-[#F28C7C] drop-shadow mb-4">
           GA 實用網站導覽
         </h1>
-        <p className="text-center text-lg text-gray-300 max-w-5xl mx-auto">
-          如果你是剛入坑的 Grand Archive 玩家，或是想要快速掌握環境資訊、組牌工具與卡價查詢，那這些網站一定不能錯過！
+        <p className="text-center text-xl text-white max-w-6xl mx-auto pt-4">
+          如果你是剛入坑的 Grand Archive
+          玩家，或是想要快速掌握環境資訊、組牌工具與卡價查詢，那這些網站一定不能錯過！
         </p>
 
         <div className="aspect-video max-w-4xl mx-auto">
@@ -99,7 +100,7 @@ export default function GAWebsiteGuide() {
                 <h2 className="text-xl font-bold text-[#F28C7C] mb-2">
                   {site.title}
                 </h2>
-                <p className="text-sm text-gray-300 leading-relaxed">
+                <p className="text-xl text-gray-300 leading-relaxed">
                   {site.description}
                 </p>
               </Link>

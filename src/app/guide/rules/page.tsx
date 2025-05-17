@@ -9,7 +9,7 @@ export default function RulesPage() {
       <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] text-center drop-shadow-[0_1px_0_rgba(0,0,0,0.9)] drop-shadow-[0_4px_6px_rgba(0,0,0,0.6)] mb-10">
         新手入門指南
       </h1>
-      <div className="bg-[#1a1a1a]/80 rounded-2xl p-6 md:p-10 shadow-lg border border-[#333]">
+      <div className="bg-[#1a1a1a]/80 rounded-2xl p-6 md:p-10 shadow-lg border border-[#333] text-xl leading-relaxed">
         {/* Section: 遊戲目標 */}
         <section className="border-b border-[#444]/40 pb-12 mb-12 last:border-0">
           <h2 className="text-3xl font-bold text-[#F28C7C] mb-4">遊戲目標</h2>
@@ -54,7 +54,7 @@ export default function RulesPage() {
 
         <section className="border-b border-[#444]/40 pb-12 mb-12 last:border-0">
           <h2 className="text-3xl font-bold text-[#F28C7C] mb-4">套牌構成</h2>
-          <p className="text-base text-white mt-2 mb-8">
+          <p className="text-white mt-2 mb-8">
             每位玩家會有兩副牌組，一副是物質牌組（Material
             Deck），一副是主牌組（Main Deck）。
           </p>
@@ -76,7 +76,7 @@ export default function RulesPage() {
             <li>最多 12 張牌</li>
             <li>至少包含一張 0 級英雄</li>
           </ul>
-          <p className="text-base text-[#fff9c4] mt-2 mb-8">
+          <p className="text-[#fff9c4] mt-2 mb-8">
             ※ 物質牌組是隱藏資訊，但你可以隨時查看
           </p>
 
@@ -87,7 +87,7 @@ export default function RulesPage() {
             <li>至少 60 張牌，無上限</li>
             <li>包含友軍（Ally）、攻擊（Attack）、行動（Action）等</li>
           </ul>
-          <p className="text-base text-[#fff9c4] mt-2 mb-8">
+          <p className="text-[#fff9c4] mt-2 mb-8">
             ※ 主牌組不可自由查看或重新排序
           </p>
           <Image
@@ -143,11 +143,11 @@ export default function RulesPage() {
             <li>預設啟用「普通元素」（Norm）</li>
             <li>英雄升級後會解鎖更多元素</li>
             <li>升級後仍保留原本的元素，可以使用英雄血統內元素的牌</li>
-            <p className="text-base text-[#fff9c4] mt-2 ">
+            <p className="text-[#fff9c4] mt-2 ">
               ※ 舉例來說，0 等出了一個 Spirit of
               Wind，這時候就解鎖兩個元素：風、普通。
             </p>
-            <p className="text-base text-[#fff9c4] mt-2 mb-8">
+            <p className="text-[#fff9c4] mt-2 mb-8">
               ※ 升到 1 等普通元素的Lorraine，仍然可以使用這兩個屬性的牌
             </p>
           </ul>
@@ -195,7 +195,7 @@ export default function RulesPage() {
             <li>從手牌中將等量的牌背面放入記憶區（Memory Zone）作為費用</li>
             <li>記憶區的牌會在「回憶階段」（Recollection Phase）回到手牌</li>
           </ol>
-          <p className="text-base text-[#fff9c4] mt-2 mb-8">
+          <p className="text-[#fff9c4] mt-2 mb-8">
             ※ 每回合可以打出任意張數的牌，只要付得出費用
           </p>
           <Image
@@ -297,7 +297,7 @@ export default function RulesPage() {
                 <li>場上沒有武器數量限制</li>
                 <li>攻擊時消耗 1 耐久</li>
                 <li>耐久歸 0 時武器會被犧牲，進除外區</li>
-                <p className="text-base text-[#fff9c4] mt-2">
+                <p className="text-[#fff9c4] mt-2">
                   ※ 可以與攻擊牌一同使用，攻擊力會疊加
                 </p>
               </ul>
@@ -325,7 +325,7 @@ export default function RulesPage() {
                 <li>快速牌可以在任意時間打出，包括對手的回合</li>
                 <li>可進行堆疊</li>
               </ul>
-              <p className="text-sm text-gray-300 mt-2">
+              <p className="text-gray-300 mt-2">
                 範例：<strong>Fireball</strong> 可在任何時機對單位造成傷害。
               </p>
             </div>
@@ -350,7 +350,7 @@ export default function RulesPage() {
                 <li>單次使用的效果牌，用完即送入墓地</li>
                 <li>慢速牌只能在你的主要階段使用，且堆疊為空時才可使用</li>
               </ul>
-              <p className="text-sm text-gray-300 mt-2">
+              <p className="text-gray-300 mt-2">
                 範例：<strong>Scry the Skies</strong>{" "}
                 可以讓你預視並調整牌庫頂端。
               </p>
@@ -377,7 +377,7 @@ export default function RulesPage() {
               alt="Guo Jia Lv1"
               width={1000}
               height={300}
-              className="rounded-lg shadow-md mb-8"
+              className="rounded-lg shadow-md mb-8 mt-4"
             />
 
             <li>
@@ -415,7 +415,7 @@ export default function RulesPage() {
             <li>宣告要物質化的牌</li>
             <li>隨機除外記憶區中等量的牌作為費用 → 可用骰子或讓對手隨機選擇</li>
           </ol>
-          <p className="text-base text-[#fff9c4] mt-2 mb-8">
+          <p className="text-[#fff9c4] mt-2 mb-8">
             ※ 除外後的牌在非特殊情況下無法回收，請謹慎選擇
           </p>
           <Image
@@ -436,7 +436,7 @@ export default function RulesPage() {
               必須從一階 Lorraine 升上去
             </li>
             <li>支付記憶費用</li>
-            <p className="text-base text-[#fff9c4] mt-2">
+            <p className="text-[#fff9c4] mt-2">
               ※
               升級後英雄保有其血統元素，你可以打出所有符合其啟用元素的牌（前提是符合各自牌片條件）
             </p>

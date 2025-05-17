@@ -83,7 +83,7 @@ export default function FeaturedPage() {
 
   return (
     <HeroSection title="精選牌組" image="/waterbarrier-bg.png">
-      <div className="mb-8 flex flex-wrap gap-4 items-center text-white">
+      <div className="mb-8 flex flex-wrap gap-4 items-center text-white text-xl">
         <label>賽事等級：</label>
         <select
           className="bg-[#1a1a1a] text-white border border-gray-600 px-4 py-2 rounded"
@@ -127,7 +127,13 @@ export default function FeaturedPage() {
         </select>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div
+        className="grid gap-6"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
+        }}
+      >
         {filteredDecks.map((deck) => {
           const elementClass =
             elementStyles[deck.element] ||
@@ -144,7 +150,7 @@ export default function FeaturedPage() {
                 <h2 className="text-xl font-bold text-white mb-3 border-b border-white/20 pb-1">
                   {deck.title}
                 </h2>
-                <ul className="text-sm text-gray-300 space-y-1">
+                <ul className="text-lg text-gray-300 space-y-1">
                   <li>
                     <span className="text-white font-medium">賽事：</span>
                     {deck.eventname}
@@ -181,12 +187,10 @@ export default function FeaturedPage() {
                 <Image
                   src={`/champions/${deck.champion.toLowerCase().replace(/\s/g, "-")}.png`}
                   alt={deck.champion}
-                  width={120}
-                  height={120}
-                  className="absolute bottom-0 right-0 w-[120px] h-[120px] object-contain"
-                  onError={(e) =>
-                    ((e.target as HTMLImageElement).style.display = "none")
-                  }
+                  width={200}
+                  height={200}
+                  unoptimized
+                  className="absolute bottom-0 right-0 w-[150px] h-[150px] object-cover"
                 />
               </div>
             </Link>

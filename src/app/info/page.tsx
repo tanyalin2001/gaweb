@@ -67,7 +67,7 @@ export default function InfoPage() {
         <div className="flex flex-wrap gap-2 mt-4">
           <button
             onClick={handleClearTag}
-            className={`px-3 py-1 rounded-full text-sm ${
+            className={`px-3 py-1 rounded-full text-lg ${
               filterTag
                 ? "bg-gray-700 text-gray-200"
                 : "bg-[#F28C7C] text-black font-bold"
@@ -79,7 +79,7 @@ export default function InfoPage() {
             <button
               key={tag}
               onClick={() => handleTagClick(tag)}
-              className={`px-3 py-1 rounded-full text-sm ${
+              className={`px-3 py-1 rounded-full text-lg ${
                 filterTag === tag
                   ? "bg-[#F28C7C] text-black font-bold"
                   : "bg-gray-700 text-gray-200"

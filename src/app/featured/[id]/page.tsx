@@ -49,8 +49,8 @@ export default async function FeaturedDeckPage({
 }) {
   const { id } = params;
   const data = rawData as FeaturedDecksWrapper;
-  const deckEntry = data.decks.find(d => d.id === id);
-  
+  const deckEntry = data.decks.find((d) => d.id === id);
+
   if (!deckEntry) return notFound();
 
   let deck: Deck | null = null;
@@ -64,10 +64,10 @@ export default async function FeaturedDeckPage({
     try {
       const [deckRes, eventRes] = await Promise.all([
         fetch(
-          `https://omni.gatcg.com/api/events/decklist?id=${deckEntry.eventid}&player=${deckEntry.playerid}`
+          `https://omni.gatcg.com/api/events/decklist?id=${deckEntry.eventid}&player=${deckEntry.playerid}`,
         ),
         fetch(
-          `https://omni.gatcg.com/api/events/event?id=${deckEntry.eventid}`
+          `https://omni.gatcg.com/api/events/event?id=${deckEntry.eventid}`,
         ),
       ]);
 
@@ -223,13 +223,14 @@ export default async function FeaturedDeckPage({
             </p>
           </div>
         )}
-      <div className="space-y-10">
-        {deck.material?.length && renderCardGrid("Material Deck", deck.material, "material")}
-        {deck.main?.length && renderCardGrid("Main Deck", deck.main, "main")}
-        {deck.sideboard?.length && renderCardGrid("Sideboard", deck.sideboard, "sideboard")}
+        <div className="space-y-10">
+          {deck.material?.length &&
+            renderCardGrid("Material Deck", deck.material, "material")}
+          {deck.main?.length && renderCardGrid("Main Deck", deck.main, "main")}
+          {deck.sideboard?.length &&
+            renderCardGrid("Sideboard", deck.sideboard, "sideboard")}
+        </div>
       </div>
-      </div> 
-
     </main>
   );
 

@@ -43,6 +43,12 @@ export default function ClassesPage() {
               desc: "美貌與命運交纏的牧師，試圖超越外表與命運展現真正的實力。",
             },
             {
+              name: "Guo Jia",
+              image: "guo-jia.png",
+              desc: "堅定守護姊妹情誼的馴獸師，踏上尋找神駒的旅途，面對命運的考驗。",
+            },
+
+            {
               name: "Jin",
               image: "jin.png",
               desc: "理性卻決絕的戰士，為了命運與所愛之人而選擇踏上成神之路。",
@@ -109,7 +115,7 @@ export default function ClassesPage() {
               <h2 className="text-xl font-bold text-white text-center mt-4">
                 {champ.name}
               </h2>
-              <p className="text-white-300 text-lg text-center mt-2">
+              <p className="text-xl text-white-300 text-lg text-center mt-2">
                 {champ.desc}
               </p>
             </div>

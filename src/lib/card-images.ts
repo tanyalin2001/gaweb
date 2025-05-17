@@ -15,14 +15,14 @@ export async function GET(request: Request) {
     const slug = slugify(name);
     const response = await fetch(`https://api.gatcg.com/cards/${slug}`);
     if (!response.ok) throw new Error("Card not found");
-    
+
     const data = await response.json();
     const image = data.editions?.[0]?.image || "";
     const imageUrl = image ? `https://api.gatcg.com${image}` : "/card-back.jpg";
 
     cache.set(name, {
       url: imageUrl,
-      expires: Date.now() + 24 * 60 * 60 * 1000
+      expires: Date.now() + 24 * 60 * 60 * 1000,
     });
 
     return NextResponse.json({ image: imageUrl });
@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ image: "/card-back.jpg" });
   }
 }
-const slugify = (cardName: string) => 
+const slugify = (cardName: string) =>
   cardName
     .toLowerCase()
     .replace(/'/g, "")

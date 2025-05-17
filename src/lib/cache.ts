@@ -20,7 +20,7 @@ class CacheManager {
   set(key: string, data: any, ttl = CACHE_TTL) {
     this.cache.set(key, {
       data,
-      expires: Date.now() + ttl
+      expires: Date.now() + ttl,
     });
   }
 }
