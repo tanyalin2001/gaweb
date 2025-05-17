@@ -133,9 +133,10 @@ export default function FeaturedPage() {
           className="grid gap-6"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
           }}
         >
+
           {filteredDecks.map((deck) => {
             const elementClass =
               elementStyles[deck.element] ||
@@ -145,7 +146,8 @@ export default function FeaturedPage() {
               <Link
                 href={`/featured/${deck.id}`}
                 key={deck.id}
-                className={`relative rounded-xl overflow-hidden p-5 hover:scale-[1.01] transition-transform shadow-lg backdrop-blur-md bg-opacity-40 backdrop-blur-lg border border-white/10 ${deck.element === "Fire" ? "bg-red-400/60" : deck.element === "Water" ? "bg-blue-400/60" : deck.element === "Wind" ? "bg-green-400/60" : "bg-gray-800/50"}`}
+                className={`relative rounded-xl overflow-hidden p-4 hover:scale-[1.01] transition-transform shadow-lg backdrop-blur-md bg-opacity-40 backdrop-blur-lg border border-white/10 ${deck.element === "Fire" ? "bg-red-400/60" : deck.element === "Water" ? "bg-blue-400/60" : deck.element === "Wind" ? "bg-green-400/60" : "bg-gray-800/50"}`}
+
               >
                 <div className="absolute inset-0 bg-black/60 z-0" />
                 <div className="relative z-10">
@@ -189,11 +191,12 @@ export default function FeaturedPage() {
                   <Image
                     src={`/champions/${deck.champion.toLowerCase().replace(/\s/g, "-")}.png`}
                     alt={deck.champion}
-                    width={200}
-                    height={200}
+                    width={120}
+                    height={120}
                     unoptimized
-                    className="absolute bottom-0 right-0 w-[150px] h-[150px] object-cover"
+                    className="absolute bottom-0 right-0 w-[120px] h-[120px] object-cover"
                   />
+
                 </div>
               </Link>
             );
