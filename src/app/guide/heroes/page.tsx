@@ -115,7 +115,7 @@ export default function ClassesPage() {
               <h2 className="text-xl font-bold text-white text-center mt-4">
                 {champ.name}
               </h2>
-              <p className="text-xl text-white-300 text-lg text-center mt-2">
+              <p className="text-white-300 text-lg text-center mt-2">
                 {champ.desc}
               </p>
             </div>

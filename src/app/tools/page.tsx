@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import Footer from "@/components/ui/footer";
 
 export default function GAWebsiteGuide() {
   const websites = [
@@ -56,58 +57,61 @@ export default function GAWebsiteGuide() {
   ];
 
   return (
-    <main className="relative min-h-screen text-white font-sans">
-      <div className="fixed inset-0 z-[-2]">
-        <Image
-          src="/extricatingTouch-bg.png"
-          alt="Background"
-          fill
-          className="object-cover object-top"
-        />
-        <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-20 space-y-12">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-center text-[#F28C7C] drop-shadow mb-4">
-          GA 實用網站導覽
-        </h1>
-        <p className="text-center text-xl text-white max-w-6xl mx-auto pt-4">
-          如果你是剛入坑的 Grand Archive
-          玩家，或是想要快速掌握環境資訊、組牌工具與卡價查詢，那這些網站一定不能錯過！
-        </p>
-
-        <div className="aspect-video max-w-4xl mx-auto">
-          <iframe
-            src="https://www.youtube.com/embed/Vc696V6v-OM?si=QMfMhzY8LuzQBqe-"
-            title="GA實用網站導覽影片"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="w-full h-full rounded-xl border border-white/10"
+    <>
+      <main className="relative min-h-screen text-white font-sans">
+        <div className="fixed inset-0 z-[-2]">
+          <Image
+            src="/extricatingTouch-bg.png"
+            alt="Background"
+            fill
+            className="object-cover object-top"
           />
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
         </div>
 
-        <ul className="space-y-8">
-          {websites.map((site) => (
-            <li
-              key={site.title}
-              className="bg-[#1a1a1a]/90 border border-[#ffffff22] rounded-2xl px-6 py-4 hover:border-[#F28C7C] transition cursor-pointer"
-            >
-              <Link
-                href={site.url}
-                target="_blank"
-                className="block w-full h-full"
+        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-20 space-y-12">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-center text-[#F28C7C] drop-shadow mb-4">
+            GA 實用網站導覽
+          </h1>
+          <p className="text-center text-white max-w-6xl mx-auto pt-4">
+            如果你是剛入坑的 Grand Archive
+            玩家，或是想要快速掌握環境資訊、組牌工具與卡價查詢，那這些網站一定不能錯過！
+          </p>
+
+          <div className="aspect-video max-w-4xl mx-auto">
+            <iframe
+              src="https://www.youtube.com/embed/Vc696V6v-OM?si=QMfMhzY8LuzQBqe-"
+              title="GA實用網站導覽影片"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full rounded-xl border border-white/10"
+            />
+          </div>
+
+          <ul className="space-y-8">
+            {websites.map((site) => (
+              <li
+                key={site.title}
+                className="bg-[#1a1a1a]/90 border border-[#ffffff22] rounded-2xl px-6 py-4 hover:border-[#F28C7C] transition cursor-pointer"
               >
-                <h2 className="text-xl font-bold text-[#F28C7C] mb-2">
-                  {site.title}
-                </h2>
-                <p className="text-xl text-gray-300 leading-relaxed">
-                  {site.description}
-                </p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </main>
+                <Link
+                  href={site.url}
+                  target="_blank"
+                  className="block w-full h-full"
+                >
+                  <h2 className="text-xl font-bold text-[#F28C7C] mb-2">
+                    {site.title}
+                  </h2>
+                  <p className="text-gray-300 leading-relaxed">
+                    {site.description}
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 }

@@ -7,6 +7,7 @@ import remarkDirective from "remark-directive";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import { visit } from "unist-util-visit";
+import Footer from "@/components/ui/footer";
 
 function remarkCards() {
   return (tree: any) => {
@@ -60,102 +61,108 @@ export default async function InfoDetailPage({
   const { data, content } = matter(fileContent);
 
   return (
-    <main className="relative min-h-screen text-white font-sans">
-      <div className="absolute inset-0 z-[-2]">
-        <div
-          className="fixed inset-0 bg-[url('/coronation-bg.png')] bg-no-repeat bg-cover bg-center"
-          style={{ zIndex: -2 }}
-        />
-      </div>
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm z-[-1]" />
-      <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-8 pt-32 pb-20 space-y-10">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] drop-shadow text-center">
-          {data.title}
-        </h1>
-
-        <p className="text-sm text-gray-400 text-center">
-          發布日期：{new Date(data.createdAt).toLocaleDateString("zh-TW")}
-        </p>
-
-        {data.coverUrl && (
-          <img
-            src={data.coverUrl}
-            alt="封面圖片"
-            className="rounded-xl w-full max-h-[500px] object-cover shadow-md"
+    <>
+      <main className="relative min-h-screen text-white font-sans">
+        <div className="absolute inset-0 z-[-2]">
+          <div
+            className="fixed inset-0 bg-[url('/coronation-bg.png')] bg-no-repeat bg-cover bg-center"
+            style={{ zIndex: -2 }}
           />
-        )}
+        </div>
+        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm z-[-1]" />
+        <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-8 pt-32 pb-20 space-y-10">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#F28C7C] drop-shadow text-center">
+            {data.title}
+          </h1>
 
-        <article className="prose prose-invert max-w-none text-gray-200 bg-[#1a1a1a]/80 p-6 rounded-2xl shadow-inner border border-white/10 space-y-8">
-          <ReactMarkdown
-            remarkPlugins={[remarkParse, remarkDirective, remarkCards]}
-            components={{
-              h1: ({ node, ...props }) => (
-                <h1 className="text-4xl font-bold mt-12 mb-4" {...props} />
-              ),
-              h2: ({ node, ...props }) => (
-                <h2 className="text-3xl font-bold mt-10 mb-3 pb-1" {...props} />
-              ),
-              h3: ({ node, ...props }) => (
-                <h3 className="text-2xl font-semibold mt-8 mb-2" {...props} />
-              ),
-              img: ({ node, ...props }) => (
-                <img
-                  {...props}
-                  className="h-[330px] w-auto object-contain rounded-xl shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
-                  alt={props.alt || ""}
-                />
-              ),
-              ul: ({ node, ...props }) => (
-                <ul className="list-disc list-inside space-y-1" {...props} />
-              ),
-              a: ({ node, ...props }) => (
-                <a
-                  {...props}
-                  className="text-[#F28C7C] underline hover:text-[#fbb6a2] transition"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                />
-              ),
-              p: ({ node, children, ...props }) => {
-                const isImageOnlyParagraph =
-                  Array.isArray(children) &&
-                  children.every(
-                    (child) =>
-                      typeof child === "object" &&
-                      child !== null &&
-                      "type" in child &&
-                      child.type === "img",
-                  );
+          <p className="text-sm text-gray-400 text-center">
+            發布日期：{new Date(data.createdAt).toLocaleDateString("zh-TW")}
+          </p>
 
-                if (isImageOnlyParagraph) {
-                  return <>{children}</>;
-                }
+          {data.coverUrl && (
+            <img
+              src={data.coverUrl}
+              alt="封面圖片"
+              className="rounded-xl w-full max-h-[500px] object-cover shadow-md"
+            />
+          )}
 
-                return (
-                  <p className="leading-relaxed" {...props}>
-                    {children}
-                  </p>
-                );
-              },
-              div: ({ node, className, ...props }) => {
-                if (className === "cards") {
+          <article className="prose prose-invert max-w-none text-gray-200 bg-[#1a1a1a]/80 p-6 rounded-2xl shadow-inner border border-white/10 space-y-8">
+            <ReactMarkdown
+              remarkPlugins={[remarkParse, remarkDirective, remarkCards]}
+              components={{
+                h1: ({ node, ...props }) => (
+                  <h1 className="text-4xl font-bold mt-12 mb-4" {...props} />
+                ),
+                h2: ({ node, ...props }) => (
+                  <h2
+                    className="text-3xl font-bold mt-10 mb-3 pb-1"
+                    {...props}
+                  />
+                ),
+                h3: ({ node, ...props }) => (
+                  <h3 className="text-2xl font-semibold mt-8 mb-2" {...props} />
+                ),
+                img: ({ node, ...props }) => (
+                  <img
+                    {...props}
+                    className="h-[330px] w-auto object-contain rounded-xl shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
+                    alt={props.alt || ""}
+                  />
+                ),
+                ul: ({ node, ...props }) => (
+                  <ul className="list-disc list-inside space-y-1" {...props} />
+                ),
+                a: ({ node, ...props }) => (
+                  <a
+                    {...props}
+                    className="text-[#F28C7C] underline hover:text-[#fbb6a2] transition"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />
+                ),
+                p: ({ node, children, ...props }) => {
+                  const isImageOnlyParagraph =
+                    Array.isArray(children) &&
+                    children.every(
+                      (child) =>
+                        typeof child === "object" &&
+                        child !== null &&
+                        "type" in child &&
+                        child.type === "img",
+                    );
+
+                  if (isImageOnlyParagraph) {
+                    return <>{children}</>;
+                  }
+
                   return (
-                    <div className="w-full flex justify-center">
-                      <div
-                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 justify-center"
-                        {...props}
-                      />
-                    </div>
+                    <p className="leading-relaxed" {...props}>
+                      {children}
+                    </p>
                   );
-                }
-                return <div className={className} {...props} />;
-              },
-            }}
-          >
-            {content}
-          </ReactMarkdown>
-        </article>
-      </div>
-    </main>
+                },
+                div: ({ node, className, ...props }) => {
+                  if (className === "cards") {
+                    return (
+                      <div className="w-full flex justify-center">
+                        <div
+                          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 justify-center"
+                          {...props}
+                        />
+                      </div>
+                    );
+                  }
+                  return <div className={className} {...props} />;
+                },
+              }}
+            >
+              {content}
+            </ReactMarkdown>
+          </article>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 }

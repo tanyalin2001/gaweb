@@ -42,7 +42,7 @@ export default function HomePage() {
       .then((data) => {
         const sorted = data.sort(
           (a: any, b: any) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
         setLatestPosts(sorted.slice(0, 3));
       });
@@ -88,13 +88,12 @@ export default function HomePage() {
             </Link>
           </div>
         </div>
+        <Divider />
       </SectionWrapper>
-
-      <Divider />
 
       {/* Featured Decks */}
       <ResponsiveSection bg="/seasonsend-bg.png" title="精選牌組" fullHeight>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-2 sm:px-0">
           {(featuredData.decks as any[]).slice(0, 3).map((deck) => {
             const typedDeck: FeaturedDeck = {
               ...deck,
@@ -106,8 +105,8 @@ export default function HomePage() {
             return (
               <motion.div
                 key={typedDeck.id}
-                className="bg-[#1a1a1a]/90 rounded-2xl overflow-hidden border border-neutral-600 hover:shadow-xl hover:scale-[1.015] transition-all"
-                whileHover={{ y: -4 }}
+                className="bg-[#1a1a1a]/90 rounded-xl overflow-hidden border border-neutral-600 hover:shadow-xl hover:scale-[1.015] transition-all"
+                whileHover={{ y: -2 }}
               >
                 <Link href={`/featured/${typedDeck.id}`}>
                   <Image
@@ -120,14 +119,14 @@ export default function HomePage() {
                     alt={typedDeck.title}
                     width={400}
                     height={250}
-                    className="w-full h-56 object-cover object-top"
+                    className="w-full h-44 sm:h-56 object-cover object-top"
                   />
-                  <div className="p-4">
-                    <h3 className="text-lg font-bold text-[#F28C7C] mb-1">
+                  <div className="p-3 sm:p-4">
+                    <h3 className="text-base sm:text-lg font-bold text-[#F28C7C] mb-1 truncate">
                       {typedDeck.title}
                     </h3>
-                    <p className="text-gray-200 text-sm">
-                      {typedDeck.intro?.slice(0, 40)}...
+                    <p className="text-gray-200 text-sm leading-tight line-clamp-2">
+                      {typedDeck.intro?.slice(0, 60)}...
                     </p>
                   </div>
                 </Link>
@@ -135,16 +134,15 @@ export default function HomePage() {
             );
           })}
         </div>
-        <div className="mt-10">
+        <div className="mt-10 mb-12">
           <Link href="/featured">
             <button className="px-6 py-3 bg-[#F28C7C] text-black font-bold rounded-full hover:bg-[#f6a999] transition">
               查看更多牌組 →
             </button>
           </Link>
         </div>
+        <Divider />
       </ResponsiveSection>
-
-      <Divider />
 
       {/* Announcements */}
       <ResponsiveSection
@@ -175,16 +173,15 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
-        <div className="mt-10">
+        <div className="mt-10 mb-12">
           <Link href="/info">
             <button className="px-6 py-3 bg-[#F28C7C] text-black font-bold rounded-full hover:bg-[#f6a999] transition">
               查看更多公告 →
             </button>
           </Link>
         </div>
+        <Divider />
       </ResponsiveSection>
-
-      <Divider />
 
       {/* Video Section */}
       <ResponsiveSection bg="/charm-bg.png" title="影片精選" fullHeight>
@@ -200,13 +197,15 @@ export default function HomePage() {
             className="rounded-full shadow-xl border-4 border-[#F28C7C] object-cover"
           />
         </div>
-        <Link
-          href="https://youtube.com/@sparklesislife"
-          target="_blank"
-          className="inline-block mt-6 bg-[#F28C7C] text-black px-8 py-3 rounded-full font-bold hover:bg-[#f6a999] transition"
-        >
-          前往頻道
-        </Link>
+        <div className="mt-6 mb-12">
+          <Link
+            href="https://youtube.com/@sparklesislife"
+            target="_blank"
+            className="inline-block bg-[#F28C7C] text-black px-8 py-3 rounded-full font-bold hover:bg-[#f6a999] transition"
+          >
+            前往頻道
+          </Link>
+        </div>
       </ResponsiveSection>
 
       <Footer />
@@ -214,11 +213,12 @@ export default function HomePage() {
   );
 }
 
-function Divider() {
+export function Divider() {
   return (
-    <div className="h-[2px] bg-gradient-to-r from-[#f28c7c]/0 via-[#f28c7c] to-[#f28c7c]/0 mx-auto w-2/3" />
+    <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#f28c7c]/0 via-[#f28c7c] to-[#f28c7c]/0 pointer-events-none" />
   );
 }
+
 
 function SectionWrapper({
   bg,
@@ -256,9 +256,11 @@ function ResponsiveSection({
 }) {
   return (
     <section
-      className={`relative w-full px-4 sm:px-8 md:px-16 ${fullHeight ? "min-h-screen flex items-center" : "py-24"}`}
+      className={`relative w-full ${
+        fullHeight ? "min-h-screen flex flex-col justify-center" : "py-24"
+      }`}
     >
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0 -z-10 object-top">
         <Image
           src={bg}
           alt="Section background"
@@ -267,8 +269,8 @@ function ResponsiveSection({
         />
         <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
       </div>
-      <div className="max-w-7xl mx-auto z-10 text-center w-full">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#F28C7C] mb-12 drop-shadow">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 z-10 text-center w-full">
+        <h2 className="mt-12 text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#F28C7C] mb-12 drop-shadow">
           {title}
         </h2>
         {children}
